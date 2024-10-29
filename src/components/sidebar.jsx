@@ -21,7 +21,7 @@ const Sidebar = ({ children }) => {
     let items = [
         { label: 'Home', icon: 'pi pi-plus', route: '/dashboard' },
         { label: 'Record', icon: 'pi-stop-circle', route: '/Record' },
-        { label: 'Past Record', icon: 'pi pi-table', route: '/PastRecord' },
+        { label: 'Past Record', icon: 'pi pi-table', route: '/pastrec' },
         { label: 'Logout', icon: 'pi pi-sign-out', route: '/logout' }
     ];
 
