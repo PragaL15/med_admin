@@ -58,7 +58,7 @@ export default function PatientCard() {
 
   return (
     <div className="inline w-full gap-4 mt-7 md:flex">
-      <Card title="Simple Card" className="w-full md:w-1/2 md:mt-0 mt-5">
+      <Card title="Simple Card" className="w-full mt-6 md:w-1/2 md:mt-0">
         <div className="card inline justify-content-center">
           <Dropdown
             value={selectedPid}
@@ -72,7 +72,7 @@ export default function PatientCard() {
           />
           <Card className="mt-4 flex items-center justify-center">
             {patientDetails ? (
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg shadow-md w-full ">
+             <div>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
                   Name:{" "}
                   <span className="font-normal text-gray-800">
@@ -97,7 +97,7 @@ export default function PatientCard() {
                     {patientDetails.p_status}
                   </span>
                 </p>
-              </div>
+                </div>
             ) : (
               <img src={Nodata} alt="No Data" className="w-20 h-24 mx-auto" />
             )}
@@ -114,7 +114,7 @@ export default function PatientCard() {
         </div>
       </Card>
 
-      <Card className="w-full mt-3 md:w-1/2 lg:w-3/5 md:mt-0 flex" title="Converted text">
+      <Card className="w-full mt-4 md:w-1/2 lg:w-3/5 flex md:mt-0" title="Converted text">
         <InputTextarea
           disabled
           rows={5}
