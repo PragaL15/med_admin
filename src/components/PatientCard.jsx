@@ -57,8 +57,8 @@ export default function PatientCard() {
   };
 
   return (
-    <div className="flex w-full gap-4 mt-7">
-      <Card title="Simple Card" className="w-1/2">
+    <div className="inline w-full gap-4 mt-7 md:flex">
+      <Card title="Simple Card" className="w-full md:w-1/2 md:mt-0 mt-5">
         <div className="card inline justify-content-center">
           <Dropdown
             value={selectedPid}
@@ -70,7 +70,7 @@ export default function PatientCard() {
             valueTemplate={selectedPidTemp}
             className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <Card className="mt-3 flex items-center justify-center">
+          <Card className="mt-4 flex items-center justify-center">
             {patientDetails ? (
               <div className="mt-4 p-4 bg-blue-50 rounded-lg shadow-md w-full ">
                 <p className="text-lg font-semibold text-blue-700 mb-2">
@@ -114,7 +114,7 @@ export default function PatientCard() {
         </div>
       </Card>
 
-      <Card className="w-full md:w-1/2 lg:w-3/5 flex" title="Converted text">
+      <Card className="w-full mt-3 md:w-1/2 lg:w-3/5 md:mt-0 flex" title="Converted text">
         <InputTextarea
           disabled
           rows={5}

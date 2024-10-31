@@ -1,0 +1,202 @@
+{
+  "hash": "6e01d1cf",
+  "configHash": "6b2bb1da",
+  "lockfileHash": "bd740ffb",
+  "browserHash": "3e0103cc",
+  "optimized": {
+    "primereact/api": {
+      "src": "../../node_modules/primereact/api/api.esm.js",
+      "file": "primereact_api.js",
+      "fileHash": "2abddd29",
+      "needsInterop": false
+    },
+    "react": {
+      "src": "../../node_modules/react/index.js",
+      "file": "react.js",
+      "fileHash": "2458610c",
+      "needsInterop": true
+    },
+    "react-router-dom": {
+      "src": "../../node_modules/react-router-dom/dist/index.js",
+      "file": "react-router-dom.js",
+      "fileHash": "3833f778",
+      "needsInterop": false
+    },
+    "primereact/button": {
+      "src": "../../node_modules/primereact/button/button.esm.js",
+      "file": "primereact_button.js",
+      "fileHash": "4c387d09",
+      "needsInterop": false
+    },
+    "react-dom/client": {
+      "src": "../../node_modules/react-dom/client.js",
+      "file": "react-dom_client.js",
+      "fileHash": "face4c3d",
+      "needsInterop": true
+    },
+    "primereact/utils": {
+      "src": "../../node_modules/primereact/utils/utils.esm.js",
+      "file": "primereact_utils.js",
+      "fileHash": "98df75d8",
+      "needsInterop": false
+    },
+    "primereact/datatable": {
+      "src": "../../node_modules/primereact/datatable/datatable.esm.js",
+      "file": "primereact_datatable.js",
+      "fileHash": "d7ca9d83",
+      "needsInterop": false
+    },
+    "primereact/column": {
+      "src": "../../node_modules/primereact/column/column.esm.js",
+      "file": "primereact_column.js",
+      "fileHash": "bebaf6b9",
+      "needsInterop": false
+    },
+    "primereact/inputtext": {
+      "src": "../../node_modules/primereact/inputtext/inputtext.esm.js",
+      "file": "primereact_inputtext.js",
+      "fileHash": "0e69b490",
+      "needsInterop": false
+    },
+    "primereact/iconfield": {
+      "src": "../../node_modules/primereact/iconfield/iconfield.esm.js",
+      "file": "primereact_iconfield.js",
+      "fileHash": "8cb0de15",
+      "needsInterop": false
+    },
+    "primereact/inputicon": {
+      "src": "../../node_modules/primereact/inputicon/inputicon.esm.js",
+      "file": "primereact_inputicon.js",
+      "fileHash": "ecdf1a38",
+      "needsInterop": false
+    },
+    "primereact/inputnumber": {
+      "src": "../../node_modules/primereact/inputnumber/inputnumber.esm.js",
+      "file": "primereact_inputnumber.js",
+      "fileHash": "bad2c0d9",
+      "needsInterop": false
+    },
+    "primereact/progressbar": {
+      "src": "../../node_modules/primereact/progressbar/progressbar.esm.js",
+      "file": "primereact_progressbar.js",
+      "fileHash": "4d380836",
+      "needsInterop": false
+    },
+    "primereact/calendar": {
+      "src": "../../node_modules/primereact/calendar/calendar.esm.js",
+      "file": "primereact_calendar.js",
+      "fileHash": "af90dd7d",
+      "needsInterop": false
+    },
+    "primereact/slider": {
+      "src": "../../node_modules/primereact/slider/slider.esm.js",
+      "file": "primereact_slider.js",
+      "fileHash": "308fa296",
+      "needsInterop": false
+    },
+    "primereact/tag": {
+      "src": "../../node_modules/primereact/tag/tag.esm.js",
+      "file": "primereact_tag.js",
+      "fileHash": "3ab5c94d",
+      "needsInterop": false
+    },
+    "primereact/tristatecheckbox": {
+      "src": "../../node_modules/primereact/tristatecheckbox/tristatecheckbox.esm.js",
+      "file": "primereact_tristatecheckbox.js",
+      "fileHash": "5a778616",
+      "needsInterop": false
+    },
+    "primereact/dropdown": {
+      "src": "../../node_modules/primereact/dropdown/dropdown.esm.js",
+      "file": "primereact_dropdown.js",
+      "fileHash": "250a3ebe",
+      "needsInterop": false
+    },
+    "primereact/card": {
+      "src": "../../node_modules/primereact/card/card.esm.js",
+      "file": "primereact_card.js",
+      "fileHash": "384f0781",
+      "needsInterop": false
+    },
+    "@mui/icons-material/Mic": {
+      "src": "../../node_modules/@mui/icons-material/esm/Mic.js",
+      "file": "@mui_icons-material_Mic.js",
+      "fileHash": "7a6a6468",
+      "needsInterop": false
+    },
+    "@mui/icons-material/MicOff": {
+      "src": "../../node_modules/@mui/icons-material/esm/MicOff.js",
+      "file": "@mui_icons-material_MicOff.js",
+      "fileHash": "97301e03",
+      "needsInterop": false
+    },
+    "primereact/inputtextarea": {
+      "src": "../../node_modules/primereact/inputtextarea/inputtextarea.esm.js",
+      "file": "primereact_inputtextarea.js",
+      "fileHash": "58baed1c",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-GSMEGDBL": {
+      "file": "chunk-GSMEGDBL.js"
+    },
+    "chunk-T23W3CS6": {
+      "file": "chunk-T23W3CS6.js"
+    },
+    "chunk-VBZO5YOA": {
+      "file": "chunk-VBZO5YOA.js"
+    },
+    "chunk-QBEILGYA": {
+      "file": "chunk-QBEILGYA.js"
+    },
+    "chunk-HTSKNMO4": {
+      "file": "chunk-HTSKNMO4.js"
+    },
+    "chunk-NLU23IVM": {
+      "file": "chunk-NLU23IVM.js"
+    },
+    "chunk-HBZXHEM5": {
+      "file": "chunk-HBZXHEM5.js"
+    },
+    "chunk-2TTPPEEW": {
+      "file": "chunk-2TTPPEEW.js"
+    },
+    "chunk-LZJISS6Y": {
+      "file": "chunk-LZJISS6Y.js"
+    },
+    "chunk-3B33TPJN": {
+      "file": "chunk-3B33TPJN.js"
+    },
+    "chunk-OFNDZ4QC": {
+      "file": "chunk-OFNDZ4QC.js"
+    },
+    "chunk-CUFKBUXH": {
+      "file": "chunk-CUFKBUXH.js"
+    },
+    "chunk-WO6ITRWO": {
+      "file": "chunk-WO6ITRWO.js"
+    },
+    "chunk-V2MG7ABT": {
+      "file": "chunk-V2MG7ABT.js"
+    },
+    "chunk-NVVTRTSK": {
+      "file": "chunk-NVVTRTSK.js"
+    },
+    "chunk-O2YLKOX3": {
+      "file": "chunk-O2YLKOX3.js"
+    },
+    "chunk-HCGKX5ED": {
+      "file": "chunk-HCGKX5ED.js"
+    },
+    "chunk-IWXOSFRG": {
+      "file": "chunk-IWXOSFRG.js"
+    },
+    "chunk-WNPTCGAH": {
+      "file": "chunk-WNPTCGAH.js"
+    },
+    "chunk-5WRI5ZAA": {
+      "file": "chunk-5WRI5ZAA.js"
+    }
+  }
+}
