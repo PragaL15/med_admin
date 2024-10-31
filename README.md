@@ -2,7 +2,7 @@
 
 A responsive and user-friendly React application for managing patient information. This frontend provides an intuitive interface for selecting and viewing patient details, including name, contact information, and status. The app is built with React and styled using Tailwind CSS and PrimeReact components, making it clean, responsive, and accessible. 
 
-![Patient Dashboard Screenshot](./public/demo-screenshot.png)
+![Patient Dashboard Screenshot](./public/screenshot -- record.png)
 
 ## 📋 Features
 - **Patient Selection**: Dropdown menu to select patients by ID and fetch details dynamically.
@@ -26,5 +26,8 @@ A responsive and user-friendly React application for managing patient informatio
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/patient-dashboard.git
-   cd patient-dashboard
+   git clone https://github.com/PragaL15/med_admin
+
+### Built
+
+Running command -- `npm run dev`
