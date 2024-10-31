@@ -72,7 +72,7 @@ export default function PatientCard() {
           />
           <Card className="mt-4 flex items-center justify-center">
             {patientDetails ? (
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg shadow-md w-full ">
+             <div>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
                   Name:{" "}
                   <span className="font-normal text-gray-800">
@@ -97,7 +97,7 @@ export default function PatientCard() {
                     {patientDetails.p_status}
                   </span>
                 </p>
-              </div>
+                </div>
             ) : (
               <img src={Nodata} alt="No Data" className="w-20 h-24 mx-auto" />
             )}
