@@ -108,13 +108,13 @@ export default function DataRecord() {
 
   const clearFilter = () => {
     initFilters();
-    setGlobalFilterValue(""); // Clear the global filter input
+    setGlobalFilterValue(""); 
   };
 
   const applyFilter = () => {
     let _filters = { ...filters };
-    _filters["global"].value = globalFilterValue; // Set the global filter value
-    setFilters(_filters); // Apply filters
+    _filters["global"].value = globalFilterValue; 
+    setFilters(_filters); 
   };
 
   const renderHeader = () => {
@@ -295,7 +295,7 @@ export default function DataRecord() {
         value={customers}
         paginator
         showGridlines
-        rows={10}
+        rows={2}
         loading={loading}
         dataKey="id"
         filters={filters}
