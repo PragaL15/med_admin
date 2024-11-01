@@ -62,7 +62,7 @@ export default function PatientCard() {
         <div className="card inline justify-content-center">
           <Dropdown
             value={selectedPid}
-            onChange={(e) => setSelectedPid(e.value)} // Set selected PID
+            onChange={(e) => setSelectedPid(e.value)} 
             options={Pids}
             optionLabel="p_id"
             placeholder="Select a PID"
@@ -70,7 +70,7 @@ export default function PatientCard() {
             valueTemplate={selectedPidTemp}
             className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <Card className="mt-4 flex items-center justify-center">
+          <Card className="mt-4 flex items-center justify-center border-black">
             {patientDetails ? (
              <div>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
