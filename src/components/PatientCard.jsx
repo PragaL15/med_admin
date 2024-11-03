@@ -221,21 +221,21 @@ export default function PatientCard() {
         </div>
       </Card>
 
-      <Card className="w-full mt-4 md:w-1/2 lg:w-3/5 flex md:mt-0" title="Converted Text">
-        <InputTextarea
-          disabled
-          rows={5}
-          cols={30}
-          value={recordedText}
-          className="w-full"
-          placeholder="Converted text will appear here..."
-        />
-        <Button
-          onClick={handleSubmit}
-          label="Submit"
-          className="bg-blue-600 text-white p-2 mt-3 w-full"
-        />
-      </Card>
+<Card className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4" title="Converted Text">
+  <InputTextarea
+    disabled
+    rows={5}
+    value={recordedText}
+    className="w-full h-60"
+    placeholder="Converted text will appear here..."
+  />
+  <Button
+    onClick={handleSubmit}
+    label="Submit"
+    className="bg-blue-600 text-white p-2 mt-3"
+  />
+</Card>
+
     </div>
   );
 }
