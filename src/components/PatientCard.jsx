@@ -4,9 +4,11 @@ import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
+import PauseIcon from "@mui/icons-material/Pause";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { InputTextarea } from "primereact/inputtextarea";
 import axios from "axios";
-import * as WavEncoder from "wav-encoder";  // Import wav-encoder
+import * as WavEncoder from "wav-encoder";
 import Nodata from "../../public/Nodata.png";
 
 export default function PatientCard() {
@@ -16,6 +18,7 @@ export default function PatientCard() {
   const [recordedText, setRecordedText] = useState("");
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch PIDs
@@ -64,8 +67,25 @@ export default function PatientCard() {
       newMediaRecorder.start();
       setMediaRecorder(newMediaRecorder);
       setIsRecording(true);
+      setIsPaused(false);
     } catch (error) {
       console.error("Error accessing microphone:", error);
+    }
+  };
+
+  // Pause recording audio
+  const pauseRecording = () => {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+      mediaRecorder.pause();
+      setIsPaused(true);
+    }
+  };
+
+  // Resume recording audio
+  const resumeRecording = () => {
+    if (mediaRecorder && mediaRecorder.state === "paused") {
+      mediaRecorder.resume();
+      setIsPaused(false);
     }
   };
 
@@ -73,18 +93,19 @@ export default function PatientCard() {
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach((track) => track.stop()); // Stop mic input
       setIsRecording(false);
+      setIsPaused(false);
     }
   };
 
-  // Send audio to backend with WAV conversion
+  // Send audio to backend with WAV conversion and save the converted text
   const sendAudio = async (blob) => {
     try {
       const arrayBuffer = await blob.arrayBuffer();
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-      // Convert to WAV using wav-encoder
       const wavBuffer = await WavEncoder.encode({
         sampleRate: audioBuffer.sampleRate,
         channelData: [audioBuffer.getChannelData(0)], // Mono channel
@@ -95,13 +116,13 @@ export default function PatientCard() {
       const formData = new FormData();
       formData.append("audio_data", wavBlob, "audio.wav");
 
-      // Send to server
       const response = await axios.post("http://localhost:5000/convert", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (response.data && response.data.text) {
-        setRecordedText(response.data.text);
+        const convertedText = response.data.text;
+        setRecordedText(convertedText);
       } else if (response.data && response.data.error) {
         setRecordedText(response.data.error);
       } else {
@@ -109,12 +130,25 @@ export default function PatientCard() {
       }
     } catch (error) {
       console.error("Error converting audio:", error);
-      if (error.response) {
-        console.error("Backend error details:", error.response.data);
-        setRecordedText(error.response.data.error || "Conversion failed.");
-      } else {
-        setRecordedText("Conversion failed.");
-      }
+      setRecordedText(error.response?.data?.error || "Conversion failed.");
+    }
+  };
+
+  // Submit converted text to backend
+  const handleSubmit = async () => {
+    if (!selectedPid || !recordedText) {
+      alert("Please select a patient and ensure there is converted text.");
+      return;
+    }
+
+    try {
+      await axios.put(`http://localhost:8080/records/${selectedPid.p_id}/description`, {
+        description: recordedText,
+      });
+      alert("Converted text saved successfully.");
+    } catch (error) {
+      console.error("Error saving converted text:", error);
+      alert("Failed to save the converted text.");
     }
   };
 
@@ -161,7 +195,21 @@ export default function PatientCard() {
             icon={<MicIcon />}
             label="Start"
             className="bg-green-600 text-white p-2"
-            disabled={isRecording}
+            disabled={isRecording || isPaused}
+          />
+          <Button
+            onClick={pauseRecording}
+            icon={<PauseIcon />}
+            label="Pause"
+            className="bg-yellow-600 text-white p-2"
+            disabled={!isRecording || isPaused}
+          />
+          <Button
+            onClick={resumeRecording}
+            icon={<PlayArrowIcon />}
+            label="Resume"
+            className="bg-blue-600 text-white p-2"
+            disabled={!isRecording || !isPaused}
           />
           <Button
             onClick={stopRecording}
@@ -181,6 +229,11 @@ export default function PatientCard() {
           value={recordedText}
           className="w-full"
           placeholder="Converted text will appear here..."
+        />
+        <Button
+          onClick={handleSubmit}
+          label="Submit"
+          className="bg-blue-600 text-white p-2 mt-3 w-full"
         />
       </Card>
     </div>
