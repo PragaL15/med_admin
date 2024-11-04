@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -16,26 +18,24 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (!username || !password) {
       setError("Please enter both username and password.");
       return;
     }
 
-    setError(""); // Reset error message
+    setError("");
 
     try {
-      // Example of API call using fetch (replace with actual API endpoint)
-      const response = await fetch("https://example.com/api/login", {
+      const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
 
       const data = await response.json();
-      if (response.ok) {
+      if (response.ok && data.status) {
         console.log("Login successful:", data);
-        // Redirect or save user data as needed
+        navigate("/dashboard"); // Redirect to /dashboard on successful login
       } else {
         setError(data.message || "Login failed. Please try again.");
       }
