@@ -28,14 +28,14 @@ export default function GridLinesDemo() {
                     value={products1} 
                     showGridlines 
                     scrollable 
-                    scrollHeight="13rem" 
-                    className="w-full text-xxs p-1 font-sans" // Applies text-xxs to the entire table
+                    scrollHeight="12rem" 
+                    className="w-full text-xxs small-padding-table" // Applies text-xxs to the entire table
                 >
-                    <Column field="code" header="Code"></Column>
+                    <Column field="code" header="id"></Column>
                     <Column field="name" header="Name"></Column>
-                    <Column field="category" header="Category"></Column>
-                    <Column field="quantity" header="Quantity"></Column>
-                    <Column field="quantity" header="Quantity"></Column>
+                    <Column field="category" header="Number"></Column>
+                    <Column field="quantity" header="Time"></Column>
+                    <Column field="quantity" header="Problem"></Column>
 
                 </DataTable>
             </div>
@@ -47,8 +47,8 @@ export default function GridLinesDemo() {
                     value={products2} 
                     showGridlines 
                     scrollable 
-                    scrollHeight="13rem" 
-                    className="w-full text-xxs" // Applies text-xxs to the entire table
+                    scrollHeight="12rem" 
+                    className="w-full text-xxs small-padding-table" 
                 >
                     <Column field="code" header="Code"></Column>
                     <Column field="name" header="Name"></Column>
