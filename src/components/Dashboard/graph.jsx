@@ -10,34 +10,30 @@ export default function PatientRecoveryGraph() {
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+
+        // Example data for Patients Admitted and Patients Cured over months
         const data = {
             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
             datasets: [
                 {
-                    type: 'line',
-                    label: 'Dataset 1',
-                    borderColor: documentStyle.getPropertyValue('--blue-500'),
-                    borderWidth: 2,
-                    fill: false,
-                    tension: 0.4,
-                    data: [50, 25, 12, 48, 56, 76, 42]
-                },
-                {
                     type: 'bar',
-                    label: 'Dataset 2',
-                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
-                    data: [21, 84, 24, 75, 37, 65, 34],
+                    label: 'Patients Admitted',
+                    backgroundColor: documentStyle.getPropertyValue('--orange-500'),
+                    data: [60, 55, 65, 80, 95, 110, 120], // Sample data for patients admitted
                     borderColor: 'white',
                     borderWidth: 2
                 },
                 {
                     type: 'bar',
-                    label: 'Dataset 3',
-                    backgroundColor: documentStyle.getPropertyValue('--orange-500'),
-                    data: [41, 52, 24, 74, 23, 21, 32]
+                    label: 'Patients Cured',
+                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
+                    data: [45, 30, 50, 70, 80, 90, 100], // Sample data for patients cured
+                    borderColor: 'white',
+                    borderWidth: 2
                 }
             ]
         };
+
         const options = {
             maintainAspectRatio: false,
             aspectRatio: 0.6,
@@ -63,6 +59,11 @@ export default function PatientRecoveryGraph() {
                     },
                     grid: {
                         color: surfaceBorder
+                    },
+                    title: {
+                        display: true,
+                        text: 'Number of Patients',
+                        color: textColorSecondary
                     }
                 }
             }
@@ -74,8 +75,7 @@ export default function PatientRecoveryGraph() {
     
     return (
         <div className="card">
-            <Chart type="line" data={chartData} options={chartOptions} className='h-88 mt-9' />
+            <Chart type="bar" data={chartData} options={chartOptions} className="h-88 mt-9" />
         </div>
-    )
+    );
 }
-        
