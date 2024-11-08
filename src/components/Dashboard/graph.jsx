@@ -1,75 +1,88 @@
 import React, { useState, useEffect } from 'react';
 import { Chart } from 'primereact/chart';
 
-export default function PatientRecoveryGraph() {
+export default function PatientStatusGraph() {
     const [chartData, setChartData] = useState({});
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
+        fetch('http://localhost:8080/patient-status')
+            .then((response) => response.json())
+            .then((data) => {
+                const monthLabels = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+    
+                // Use `record.p_status` instead of `record.status`
+                const activeCounts = monthLabels.map(month => 
+                    data.filter(record => record.month === month && record.p_status === 'Active').length
+                );
+    
+                const inactiveCounts = monthLabels.map(month => 
+                    data.filter(record => record.month === month && record.p_status === 'Inactive').length
+                );
+    
+                const chartData = {
+                    labels: monthLabels,
+                    datasets: [
+                        {
+                            label: 'Active Patients',
+                            backgroundColor: '#4CAF50',
+                            data: activeCounts,
+                        },
+                        {
+                            label: 'Inactive Patients',
+                            backgroundColor: '#FF5722',
+                            data: inactiveCounts,
+                        },
+                    ],
+                };
+    
+                setChartData(chartData);
+            })
+            .catch((error) => console.error("Error fetching patient status data:", error));
+        
+        // Chart options setup
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-        // Example data for Patients Admitted and Patients Cured over months
-        const data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    type: 'bar',
-                    label: 'Patients Admitted',
-                    backgroundColor: documentStyle.getPropertyValue('--orange-500'),
-                    data: [60, 55, 65, 80, 95, 110, 120], // Sample data for patients admitted
-                    borderColor: 'white',
-                    borderWidth: 2
-                },
-                {
-                    type: 'bar',
-                    label: 'Patients Cured',
-                    backgroundColor: documentStyle.getPropertyValue('--green-500'),
-                    data: [45, 30, 50, 70, 80, 90, 100], // Sample data for patients cured
-                    borderColor: 'white',
-                    borderWidth: 2
-                }
-            ]
-        };
-
+    
         const options = {
             maintainAspectRatio: false,
-            aspectRatio: 0.6,
             plugins: {
                 legend: {
                     labels: {
-                        color: textColor
-                    }
-                }
+                        color: textColor,
+                    },
+                },
             },
             scales: {
                 x: {
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
                     },
                     grid: {
-                        color: surfaceBorder
-                    }
+                        color: surfaceBorder,
+                    },
                 },
                 y: {
                     ticks: {
-                        color: textColorSecondary
+                        color: textColorSecondary,
                     },
                     grid: {
-                        color: surfaceBorder
+                        color: surfaceBorder,
                     },
                     title: {
                         display: true,
                         text: 'Number of Patients',
-                        color: textColorSecondary
-                    }
-                }
-            }
+                        color: textColorSecondary,
+                    },
+                },
+            },
         };
-
-        setChartData(data);
+    
         setChartOptions(options);
     }, []);
     
