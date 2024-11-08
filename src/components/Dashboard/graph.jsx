@@ -13,16 +13,18 @@ export default function PatientStatusGraph() {
                     'January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'
                 ];
-    
-                // Use `record.p_status` instead of `record.status`
+
+                // Calculate active, inactive, and total counts for each month
                 const activeCounts = monthLabels.map(month => 
                     data.filter(record => record.month === month && record.p_status === 'Active').length
                 );
-    
+
                 const inactiveCounts = monthLabels.map(month => 
                     data.filter(record => record.month === month && record.p_status === 'Inactive').length
                 );
-    
+
+                const totalCounts = monthLabels.map((_, index) => activeCounts[index] + inactiveCounts[index]);
+
                 const chartData = {
                     labels: monthLabels,
                     datasets: [
@@ -36,19 +38,24 @@ export default function PatientStatusGraph() {
                             backgroundColor: '#FF5722',
                             data: inactiveCounts,
                         },
+                        {
+                            label: 'Total Patients',
+                            backgroundColor: '#42A5F5',
+                            data: totalCounts,
+                        },
                     ],
                 };
-    
+
                 setChartData(chartData);
             })
             .catch((error) => console.error("Error fetching patient status data:", error));
-        
+
         // Chart options setup
         const documentStyle = getComputedStyle(document.documentElement);
         const textColor = documentStyle.getPropertyValue('--text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-    
+
         const options = {
             maintainAspectRatio: false,
             plugins: {
@@ -82,10 +89,10 @@ export default function PatientStatusGraph() {
                 },
             },
         };
-    
+
         setChartOptions(options);
     }, []);
-    
+
     return (
         <div className="card">
             <Chart type="bar" data={chartData} options={chartOptions} className="h-88 mt-9" />
