@@ -20,8 +20,9 @@ const Sidebar = ({ children }) => {
 
     let items = [
         { label: 'Home', icon: 'pi pi-plus', route: '/dashboard' },
-        { label: 'Record', icon: 'pi-stop-circle', route: '/Record' },
+        { label: 'Record', icon: 'pi pi-plus-circle', route: '/Record' },
         { label: 'Past Record', icon: 'pi pi-table', route: '/pastrec' },
+        { label: 'New Patient Details', icon: 'pi pi-clipboard', route: '/AddPatient' },
         { label: 'Logout', icon: 'pi pi-sign-out', route: '/logout' }
     ];
 

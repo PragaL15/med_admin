@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/sidebar";
-import DataRecord from "../components/CompleteTable";
+import DataRecord from "../components/PastRec/CompleteTable";
 const PastRecord = () => {
   return(
   <div className=' h-screen'>

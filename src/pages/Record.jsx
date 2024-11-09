@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../components/sidebar";
-import PatientCard from '../components/PatientCard'
+import PatientCard from '../components/Record/PatientCard'
 const Record = () => {
 return (
         <div className=' h-screen'>

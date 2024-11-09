@@ -9,7 +9,7 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { InputTextarea } from "primereact/inputtextarea";
 import axios from "axios";
 import * as WavEncoder from "wav-encoder";
-import Nodata from "../../public/Nodata.png";
+import Nodata from "../../../public/Nodata.png";
 
 export default function PatientCard() {
   const [selectedPid, setSelectedPid] = useState(null);
