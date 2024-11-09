@@ -16,13 +16,13 @@ export function DynamicColumnsDemo() {
     const columns = [
         { field: 'code', header: 'ID' },
         { field: 'name', header: 'Patient Name' },
-        { field: 'category', header: 'Room No' },
+        { field: 'category', header: 'Ward No' },
         { field: 'quantity', header: 'Problem' }
     ];
 
     return (
         <div className="card overflow-x-auto">
-            <DataTable className="md:w-full" value={products} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable className="md:w-full" paginator rows={3} value={products} tableStyle={{ minWidth: '50rem' }}>
                 {columns.map((col) => (
                     <Column key={col.field} field={col.field} header={col.header} />
                 ))}
@@ -46,7 +46,7 @@ export function HeadlessDemo() {
             <ConfirmDialog
                 group="headless"
                 content={({ headerRef, contentRef, footerRef, hide, message }) => (
-                    <div className="inline flex flex-col items-center p-5 bg-white rounded-lg shadow-lg w-64 ml-0 md:w-80 md:ml-36">
+                    <div className="inline flex flex-col items-center p-5 bg-white rounded-lg shadow-lg w-64 ml-0 md:w-96 md:ml-36">
                         <div className="flex justify-center items-center w-16 h-16 rounded-full bg-blue-500 -mt-12">
                             <i className="pi pi-question text-white text-4xl"></i>
                         </div>

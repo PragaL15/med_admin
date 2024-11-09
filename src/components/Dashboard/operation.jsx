@@ -1,42 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 
+// Component for displaying the urgent notification table
 export function UrgentNotificationTable() {
-    const [patients, setPatients] = useState([
-        { code: 'P001', name: 'Patient 1', operation: 'Category A', date: 10, admitted: true },
-        { code: 'P002', name: 'Patient 2', operation: 'Category B', date: 5, admitted: false },
-        { code: 'P003', name: 'Patient 3', operation: 'Category A', date: 20, admitted: false },
-        { code: 'P004', name: 'Patient 4', operation: 'Category C', date: 15, admitted: true },
-    ]);
+    const [patients, setPatients] = useState([]);
 
+    // Fetch data from the backend when the component mounts
+    useEffect(() => {
+        fetch("http://localhost:8080/RecentOperation") // Adjust the URL as needed
+            .then(response => response.json())
+            .then(data => setPatients(data))
+            .catch(error => console.error("Error fetching patient data:", error));
+    }, []);
+
+    // Define the columns to display in the table
     const columns = [
-        { field: 'code', header: 'ID' },
-        { field: 'name', header: 'Patient Name' },
-        { field: 'operation', header: 'Operation' },
-        { field: 'date', header: 'Date' },
-        { field: 'admitted', header: 'Admitted' }
+        { field: 'id', header: 'ID' },
+        { field: 'p_name', header: 'Patient Name' },
+        { field: 'p_health', header: 'Health' },
+        { field: 'p_operation', header: 'Operation' },
+        { field: 'p_operation_date', header: 'Operation Date' },
+        { field: 'p_operated_doctor', header: 'Doctor' },
+        { field: 'duration_admit', header: 'Duration' },
+        { field: 'ward_no', header: 'Ward No' },
     ];
 
     return (
-        <div className="card overflow-x-auto">
-            <DataTable className="md:w-full" value={patients} tableStyle={{ minWidth: '50rem' }}>
+      
+        <div className="card overflow-x-auto w-full">
+            <DataTable className="md:w-full"  paginator rows={3}  value={patients} tableStyle={{ minWidth: '80rem' }}>
                 {columns.map((col) => (
                     <Column key={col.field} field={col.field} header={col.header} />
                 ))}
             </DataTable>
         </div>
+
     );
 }
 
+// Dialog component for displaying urgent notifications
 export function UrgentNotificationDialog() {
     const showUrgentNotification = () => {
         confirmDialog({
             group: 'urgentNotification',
-            header: 'Pecent Operation',
+            header: 'Recent Operations',
             icon: 'pi pi-exclamation-triangle',
             defaultFocus: 'accept',
         });
@@ -47,7 +58,7 @@ export function UrgentNotificationDialog() {
             <ConfirmDialog
                 group="urgentNotification"
                 content={({ headerRef, contentRef, footerRef, hide, message }) => (
-                    <div className="inline flex flex-col items-center p-5 bg-white rounded-lg shadow-lg w-64 ml-0 md:w-80 md:ml-36">
+                    <div className="inline flex flex-col items-center p-5 bg-white rounded-lg shadow-lg w-64 ml-0 md:w-96 md:ml-36">
                         <div className="flex justify-center items-center w-16 h-16 rounded-full bg-blue-500 -mt-12">
                             <i className="pi pi-question text-white text-4xl"></i>
                         </div>
@@ -81,6 +92,7 @@ export function UrgentNotificationDialog() {
     );
 }
 
+// Main App component
 export default function App() {
     return (
         <div className="p-4 mt-10">

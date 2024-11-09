@@ -23,7 +23,7 @@ export function RecentOperationsTable() {
 
     return (
         <div className="card overflow-x-auto">
-            <DataTable className="md:w-full" value={patients} tableStyle={{ minWidth: '50rem' }}>
+            <DataTable className="md:w-full" paginator rows={3} value={patients} tableStyle={{ minWidth: '50rem' }}>
                 {columns.map((col) => (
                     <Column key={col.field} field={col.field} header={col.header} className='bg-white'/>
                 ))}
