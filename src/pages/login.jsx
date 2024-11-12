@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -23,7 +23,7 @@ const LoginPage = () => {
       return;
     }
 
-    setError("");
+    setError(""); // Clear any previous errors
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -33,10 +33,25 @@ const LoginPage = () => {
       });
 
       const data = await response.json();
+
       if (response.ok && data.status) {
+        // Store token, role, and user_id in localStorage
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("role", data.role);
+        localStorage.setItem("user_id", data.user_id);
+
         console.log("Login successful:", data);
-        navigate("/dashboard"); // Redirect to /dashboard on successful login
+
+        // Redirect based on user_id
+        if (data.user_id === 1) {
+          navigate("/dashboard");  // Redirect admin to dashboard
+        } else if (data.user_id === 2) {
+          navigate("/record");  // Redirect user to record page
+        } else {
+          navigate("/");  // Default fallback route
+        }
       } else {
+        // Handle errors from the server
         setError(data.message || "Login failed. Please try again.");
       }
     } catch (error) {
