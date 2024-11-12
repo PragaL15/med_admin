@@ -11,11 +11,36 @@ export function UrgentNotificationTable() {
 
     // Fetch data from the backend when the component mounts
     useEffect(() => {
-        fetch("http://localhost:8080/RecentOperation") // Adjust the URL as needed
-            .then(response => response.json())
-            .then(data => setPatients(data))
-            .catch(error => console.error("Error fetching patient data:", error));
+        const fetchPatients = async () => {
+            const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+            if (!token) {
+                console.error("No auth token found in localStorage");
+                return;
+            }
+    
+            try {
+                const response = await fetch("http://localhost:8080/api/RecentOperation", {
+                    method: "GET",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                setPatients(data);
+            } catch (error) {
+                console.error("Error fetching patient data:", error);
+            }
+        };
+    
+        fetchPatients();
     }, []);
+    
 
     // Define the columns to display in the table
     const columns = [

@@ -32,56 +32,67 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
 
     // Handle form submission
     const handleSubmit = async () => {
-        const newErrors = {};
-
-        // Validate all fields
-        if (!name) newErrors.name = 'Name is required';
-        if (!phone) newErrors.phone = 'Phone number is required';
-        if (!email) newErrors.email = 'Email is required';
-        if (!status) newErrors.status = 'Status is required';
-        if (!address) newErrors.address = 'Address is required';
-        if (!mode) newErrors.mode = 'Mode is required';
-        if (!age) newErrors.age = 'Age is required';
-        if (!gender) newErrors.gender = 'Gender is required';
-
-        setErrors(newErrors);
-
-        // Check if there are any errors
-        if (Object.keys(newErrors).length > 0) {
-            alert("Please fill in all required fields.");
-        } else {
-            const patientData = {
-                p_name: name,
-                p_number: phone,
-                p_email: email,
-                p_status: status,
-                p_address: address,
-                p_mode: mode,
-                p_age: parseInt(age, 10),
-                p_gender: gender,
-            };
-
-            try {
-                const response = await axios.post('http://localhost:8080/patientDetails', patientData);
-                if (response.status === 201) {
-                    goToStepper(); 
-                    alert("Form submitted successfully")
-                    window.location.reload(); //to reload the page once form is submitted
-                } else {
-                    alert('Failed to add patient.');
-                }
-            } catch (error) {
-                console.error("There was an error adding the patient:", error);
-                alert('Error while submitting the form.');
-            }
-        }
-    };
-
+      const newErrors = {};
+  
+      // Validate all fields
+      if (!name) newErrors.name = 'Name is required';
+      if (!phone) newErrors.phone = 'Phone number is required';
+      if (!email) newErrors.email = 'Email is required';
+      if (!status) newErrors.status = 'Status is required';
+      if (!address) newErrors.address = 'Address is required';
+      if (!mode) newErrors.mode = 'Mode is required';
+      if (!age) newErrors.age = 'Age is required';
+      if (!gender) newErrors.gender = 'Gender is required';
+  
+      setErrors(newErrors);
+  
+      // Check if there are any errors
+      if (Object.keys(newErrors).length > 0) {
+          alert("Please fill in all required fields.");
+      } else {
+          const patientData = {
+              p_name: name,
+              p_number: phone,
+              p_email: email,
+              p_status: status,
+              p_address: address,
+              p_mode: mode,
+              p_age: parseInt(age, 10),
+              p_gender: gender,
+          };
+  
+          try {
+              const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
+  
+              if (!token) {
+                  alert("Authorization token is missing. Please log in again.");
+                  return;
+              }
+  
+              const response = await axios.post('http://localhost:8080/api/patientDetails', patientData, {
+                  headers: {
+                      "Authorization": `Bearer ${token}`, // Add the token to the Authorization header
+                      "Content-Type": "application/json"
+                  }
+              });
+  
+              if (response.status === 201) {
+                  goToStepper(); 
+                  alert("Form submitted successfully");
+                  window.location.reload(); // Reload the page once the form is submitted
+              } else {
+                  alert('Failed to add patient.');
+              }
+          } catch (error) {
+              console.error("There was an error adding the patient:", error);
+              alert('Error while submitting the form.');
+          }
+      }
+  };
     return (
         <div className="w-full p-6 bg-transparent">
             <h1 className="text-2xl font-bold mb-6">Add Patient Details</h1>
             <div className="inline  h-screen bg-white overflow-hidden w-full">
-                {/* Name Field */}
                 <div className='w-full  h-full max-h-[100vh] overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg space-y-6'>
                   <div>
                     <label className="text-lg font-medium text-gray-700">Name:</label>
@@ -93,8 +104,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     />
                     {errors.name && <span className="text-red-500 text-sm">{errors.name}</span>}
                 </div>
-
-                {/* Phone Field */}
                 <div>
                     <label className="text-lg font-medium text-gray-700">Phone Number:</label>
                     <InputText
@@ -105,8 +114,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     />
                     {errors.phone && <span className="text-red-500 text-sm">{errors.phone}</span>}
                 </div>
-
-                {/* Email Field */}
                 <div>
                     <label className="text-lg font-medium text-gray-700">Email:</label>
                     <InputText
@@ -117,8 +124,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     />
                     {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
                 </div>
-
-                {/* Status Dropdown */}
                 <div>
                     <label className="text-lg font-medium text-gray-700">Status:</label>
                     <Dropdown
@@ -130,8 +135,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     />
                     {errors.status && <span className="text-red-500 text-sm">{errors.status}</span>}
                 </div>
-
-                {/* Address Field */}
                 <div>
                     <label className="text-lg font-medium text-gray-700">Address:</label>
                     <InputText
@@ -142,8 +145,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     />
                     {errors.address && <span className="text-red-500 text-sm">{errors.address}</span>}
                 </div>
-
-                {/* Mode Dropdown */}
                 <div>
                     <label className="text-lg font-medium text-gray-700">Mode:</label>
                     <Dropdown
@@ -185,9 +186,7 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                     onClick={handleSubmit}
                     className="bg-blue-500 text-white px-6 py-2 mt-4 rounded-md hover:bg-blue-600 w-24"
                 />
-                </div>
-             
-                
+                </div>   
             </div>
           
         </div>

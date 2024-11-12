@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -23,7 +23,7 @@ const LoginPage = () => {
       return;
     }
 
-    setError(""); // Clear any previous errors
+    setError("");
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -33,25 +33,10 @@ const LoginPage = () => {
       });
 
       const data = await response.json();
-
       if (response.ok && data.status) {
-        // Store token, role, and user_id in localStorage
-        localStorage.setItem("authToken", data.token);
-        localStorage.setItem("role", data.role);
-        localStorage.setItem("user_id", data.user_id);
-
         console.log("Login successful:", data);
-
-        // Redirect based on user_id
-        if (data.user_id === 1) {
-          navigate("/dashboard");  // Redirect admin to dashboard
-        } else if (data.user_id === 2) {
-          navigate("/record");  // Redirect user to record page
-        } else {
-          navigate("/");  // Default fallback route for other users
-        }
+        navigate("/dashboard"); // Redirect to /dashboard on successful login
       } else {
-        // Handle errors from the server if status is false or response not ok
         setError(data.message || "Login failed. Please try again.");
       }
     } catch (error) {
@@ -62,8 +47,13 @@ const LoginPage = () => {
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
+      <div className="inline">
+       <h1 className="text-2xl font-bold text-center">Successfully Logged out of the session!!!</h1>
+       <h2 className="text- xl font-bold text-center mt-3">Login to continue</h2>
+     
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center">Login</h2>
+       
+        <h3 className="text-xl font-bold text-center">Login</h3>
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -95,6 +85,7 @@ const LoginPage = () => {
             Login
           </button>
         </form>
+      </div>
       </div>
     </div>
   );

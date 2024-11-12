@@ -21,37 +21,78 @@ export default function PatientCard() {
   const [isPaused, setIsPaused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch PIDs
-  useEffect(() => {
-    const fetchPids = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/patients");
+  const getAuthToken = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("No auth token found in localStorage"); // Log if the token is missing
+    }
+    return token;
+  };
+ // Fetch patient IDs with Authorization header
+ useEffect(() => {
+  const fetchPids = async () => {
+    try {
+      const token = getAuthToken();
+      if (token) {
+        const response = await axios.get("http://localhost:8080/api/patients", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log("PIDs API Response:", response.data);
         setPids(response.data);
-      } catch (error) {
+      } else {
+        console.error("Unable to fetch PIDs due to missing token.");
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.error("Unauthorized access - redirecting to login.");
+        // Redirect to login or show a notification for re-authentication
+      } else {
         console.error("Error fetching PIDs:", error);
       }
-    };
-    fetchPids();
-  }, []);
+    }
+  };
+  fetchPids();
+}, []);
 
-  // Fetch Patient Details based on selected PID
-  useEffect(() => {
-    const fetchPatientDetails = async () => {
-      if (selectedPid) {
-        try {
-          setIsLoading(true);
-          const response = await axios.get(`http://localhost:8080/patients/${selectedPid.p_id}`);
+// Fetch patient details with Authorization header
+useEffect(() => {
+  const fetchPatientDetails = async () => {
+    if (selectedPid) {
+      try {
+        setIsLoading(true);
+        const token = getAuthToken();
+        if (token) {
+          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.p_id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          console.log("Patient Details API Response:", response.data);
           setPatientDetails(response.data);
-        } catch (error) {
-          console.error("Error fetching patient details:", error);
-          setPatientDetails(null);
-        } finally {
-          setIsLoading(false);
+        } else {
+          console.error("Unable to fetch patient details due to missing token.");
         }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          console.error("Unauthorized access - redirecting to login.");
+          // Redirect to login or show a notification for re-authentication
+        } else {
+          console.error("Error fetching patient details:", error);
+        }
+        setPatientDetails(null); // Clear details if an error occurs
+      } finally {
+        setIsLoading(false);
       }
-    };
-    fetchPatientDetails();
-  }, [selectedPid]);
+    }
+  };
+  fetchPatientDetails();
+}, [selectedPid]);
+
+// Debugging: Log token, role, and user_id
+useEffect(() => {
+    console.log("Auth Token:", localStorage.getItem("authToken"));
+    console.log("Role:", localStorage.getItem("role"));
+    console.log("User ID:", localStorage.getItem("user_id"));
+}, []);
+
 
   // Start recording audio
   const startRecording = async () => {
@@ -141,11 +182,21 @@ export default function PatientCard() {
       return;
     }
 
+    const token = getAuthToken();
     try {
-      await axios.put(`http://localhost:8080/records/${selectedPid.p_id}/description`, {
-        description: recordedText,
-      });
-      alert("Converted text saved successfully.");
+      if (token) {
+        await axios.put(
+          `http://localhost:8080/api/records/${selectedPid.p_id}/description`,
+          { description: recordedText },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        alert("Converted text saved successfully.");
+        window.location.reload();
+      } else {
+        alert("Authorization token is missing. Please log in again.");
+      }
     } catch (error) {
       console.error("Error saving converted text:", error);
       alert("Failed to save the converted text.");

@@ -6,26 +6,45 @@ export default function PatientStatusGraph() {
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
-        fetch('http://localhost:8080/patient-status')
-            .then((response) => response.json())
-            .then((data) => {
+        const fetchPatientStatusData = async () => {
+            const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+
+            if (!token) {
+                console.error("No auth token found in localStorage");
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8080/api/patient-status', {
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const data = await response.json();
+
                 const monthLabels = [
                     'January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'
                 ];
 
                 // Calculate active, inactive, and total counts for each month
-                const activeCounts = monthLabels.map(month => 
+                const activeCounts = monthLabels.map(month =>
                     data.filter(record => record.month === month && record.p_status === 'Active').length
                 );
 
-                const inactiveCounts = monthLabels.map(month => 
+                const inactiveCounts = monthLabels.map(month =>
                     data.filter(record => record.month === month && record.p_status === 'Inactive').length
                 );
 
                 const totalCounts = monthLabels.map((_, index) => activeCounts[index] + inactiveCounts[index]);
 
-                const chartData = {
+                setChartData({
                     labels: monthLabels,
                     datasets: [
                         {
@@ -44,11 +63,13 @@ export default function PatientStatusGraph() {
                             data: totalCounts,
                         },
                     ],
-                };
+                });
+            } catch (error) {
+                console.error("Error fetching patient status data:", error);
+            }
+        };
 
-                setChartData(chartData);
-            })
-            .catch((error) => console.error("Error fetching patient status data:", error));
+        fetchPatientStatusData();
 
         // Chart options setup
         const documentStyle = getComputedStyle(document.documentElement);
@@ -56,7 +77,7 @@ export default function PatientStatusGraph() {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
 
-        const options = {
+        setChartOptions({
             maintainAspectRatio: false,
             plugins: {
                 legend: {
@@ -88,9 +109,7 @@ export default function PatientStatusGraph() {
                     },
                 },
             },
-        };
-
-        setChartOptions(options);
+        });
     }, []);
 
     return (

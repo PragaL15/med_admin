@@ -17,14 +17,39 @@ export default function DataRecord() {
     initFilters();
   }, []);
 
+  // Function to get the auth token from localStorage
+  const getAuthToken = () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      console.error("No auth token found in localStorage");
+    }
+    return token;
+  };
+
   const fetchCombinedRecords = async () => {
+    const token = getAuthToken();
+    if (!token) {
+      setLoading(false);
+      return; // If no token, stop fetching
+    }
+
     try {
-      // Fetch data from all three APIs
+      // Fetch data from all three APIs with the token in the headers
       const [recordsResponse, patientsResponse, doctorsResponse] = await Promise.all([
-        fetch("http://localhost:8080/records"),
-        fetch("http://localhost:8080/patients"),
-        fetch("http://localhost:8080/doctors"),
+        fetch("http://localhost:8080/api/records", {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        fetch("http://localhost:8080/api/patients", {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        fetch("http://localhost:8080/api/doctors", {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
       ]);
+
+      if (!recordsResponse.ok || !patientsResponse.ok || !doctorsResponse.ok) {
+        throw new Error("Failed to fetch data. Please check your credentials or try again later.");
+      }
 
       const recordsData = await recordsResponse.json();
       const patientsData = await patientsResponse.json();
@@ -33,14 +58,13 @@ export default function DataRecord() {
       // Combine each record with corresponding patient and doctor data
       const combinedData = recordsData.map((record) => {
         const patient = patientsData.find((p) => p.p_id === record.p_id) || {};
-        // Fetch the doctor using the correct field doctor_id
-        const doctor = doctorsData.find((d) => d.doctor_id === record.doctor_id) || {}; // Using `doctor_id` to match
+        const doctor = doctorsData.find((d) => d.doctor_id === record.doctor_id) || {};
 
         return {
           ...record,
           patient_id: patient.p_id,
           name: patient.p_name,
-          drName: doctor.d_name || "Unknown", // Assign doctor's name to `drName`, use "Unknown" if not found
+          drName: doctor.d_name || "Unknown",
         };
       });
 
