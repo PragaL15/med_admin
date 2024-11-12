@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { IconField } from "primereact/iconfield";
+import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 import { Calendar } from "primereact/calendar";
 import { Button } from "primereact/button";
@@ -17,7 +19,6 @@ export default function DataRecord() {
     initFilters();
   }, []);
 
-  // Function to get the auth token from localStorage
   const getAuthToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -30,20 +31,19 @@ export default function DataRecord() {
     const token = getAuthToken();
     if (!token) {
       setLoading(false);
-      return; // If no token, stop fetching
+      return;
     }
 
     try {
-      // Fetch data from all three APIs with the token in the headers
       const [recordsResponse, patientsResponse, doctorsResponse] = await Promise.all([
         fetch("http://localhost:8080/api/records", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         }),
         fetch("http://localhost:8080/api/patients", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         }),
         fetch("http://localhost:8080/api/doctors", {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
@@ -55,11 +55,9 @@ export default function DataRecord() {
       const patientsData = await patientsResponse.json();
       const doctorsData = await doctorsResponse.json();
 
-      // Combine each record with corresponding patient and doctor data
       const combinedData = recordsData.map((record) => {
         const patient = patientsData.find((p) => p.p_id === record.p_id) || {};
         const doctor = doctorsData.find((d) => d.doctor_id === record.doctor_id) || {};
-
         return {
           ...record,
           patient_id: patient.p_id,
@@ -78,27 +76,12 @@ export default function DataRecord() {
 
   const initFilters = () => {
     setFilters({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+      global: { value: "", matchMode: FilterMatchMode.CONTAINS },
       name: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: "", matchMode: FilterMatchMode.STARTS_WITH }],
       },
-      date: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-      },
-      drName: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-      description: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-      prescription: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
+      // Additional filters for other columns can be initialized here
     });
   };
 
@@ -123,28 +106,33 @@ export default function DataRecord() {
 
   const renderHeader = () => {
     return (
-      <div className="flex justify-content-between">
+      <div className="flex justify-between items-center bg-slate-100">
         <Button
           type="button"
           icon="pi pi-filter-slash"
           label="Clear"
           outlined
           onClick={clearFilter}
+          className="mr-24 bg-blue-500 p-3 text-white"
         />
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-            placeholder="Keyword Search"
-          />
-        </span>
+        <div className="flex items-center space-x-2">
+          <IconField iconPosition="left">
+            <InputIcon className="pi pi-search" />
+            <InputText
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+              placeholder="Search by Name"
+              className="p-2 px-4 focus:outline-none focus:border-none"
+            />
+          </IconField>
+        </div>
         <Button
           type="button"
           icon="pi pi-filter"
           label="Filter"
           outlined
           onClick={applyFilter}
+          className="bg-blue-500 p-3 text-white"
         />
       </div>
     );
@@ -173,27 +161,61 @@ export default function DataRecord() {
   const header = renderHeader();
 
   return (
-    <div className="card">
-      <DataTable
-        value={records}
-        paginator
-        showGridlines
-        rows={5}
-        loading={loading}
-        dataKey="id"
-        filters={filters}
-        globalFilterFields={["name", "description", "prescription", "drName"]}
-        header={header}
-        emptyMessage="No records found."
-        className="md:mt-0 mt-7"
-      >
-        <Column field="patient_id" header="Patient ID" filter filterPlaceholder="Search by Patient ID" />
-        <Column field="name" header="Name" filter filterPlaceholder="Search by Name" />
-        <Column field="date" header="Date" body={dateBodyTemplate} filter filterElement={dateFilterTemplate} />
-        <Column field="drName" header="Dr. Name" filter filterPlaceholder="Search by Dr. Name" />
-        <Column field="description" header="Description" filter filterPlaceholder="Search by Description" />
-        <Column field="prescription" header="Prescription" filter filterPlaceholder="Search by Prescription" />
-      </DataTable>
+    <div>
+      <h1 className="text-2xl font-bold mb-6">Patient Past Records</h1>
+      <div className="card">
+        <DataTable
+          value={records}
+          paginator
+          showGridlines
+          rows={5}
+          loading={loading}
+          dataKey="id"
+          filters={filters}
+          globalFilterFields={["name", "description", "prescription", "drName"]}
+          header={header}
+          emptyMessage="No records found."
+          className="md:mt-0 mt-7"
+        >
+          <Column
+            field="patient_id"
+            header="Patient ID"
+            filter
+            filterPlaceholder="Search by Patient ID"
+          />
+          <Column
+            field="name"
+            header="Name"
+            filter
+            filterPlaceholder="Search by Name"
+          />
+          <Column
+            field="date"
+            header="Date"
+            body={dateBodyTemplate}
+            filter
+            filterElement={dateFilterTemplate}
+          />
+          <Column
+            field="drName"
+            header="Dr. Name"
+            filter
+            filterPlaceholder="Search by Dr. Name"
+          />
+          <Column
+            field="description"
+            header="Description"
+            filter
+            filterPlaceholder="Search by Description"
+          />
+          <Column
+            field="prescription"
+            header="Prescription"
+            filter
+            filterPlaceholder="Search by Prescription"
+          />
+        </DataTable>
+      </div>
     </div>
   );
 }

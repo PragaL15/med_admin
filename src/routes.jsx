@@ -13,14 +13,14 @@ const RoutesComponent = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public Routes */}
+    
         <Route path="/login" element={<Login />} />
 
-        {/* Role-Based Protected Routes */}
+       
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  {/* User IDs 1 and 2 can access */}
+            <ProtectedRoute allowedUserIds={[1, 2]}>  
               <Dashboard />
             </ProtectedRoute>
           }
@@ -28,7 +28,7 @@ const RoutesComponent = () => {
         <Route
           path="/record"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  {/* User IDs 1 and 2 can access */}
+            <ProtectedRoute allowedUserIds={[1, 2]}>  
               <Record />
             </ProtectedRoute>
           }
@@ -36,7 +36,7 @@ const RoutesComponent = () => {
         <Route
           path="/pastrec"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  {/* User IDs 1 and 2 can access */}
+            <ProtectedRoute allowedUserIds={[1, 2]}>  
               <PastRecord />
             </ProtectedRoute>
           }
@@ -44,7 +44,7 @@ const RoutesComponent = () => {
         <Route
           path="/AddPatient"
           element={
-            <ProtectedRoute allowedUserIds={[1]}>  {/* Only User ID 1 (Admin) can access */}
+            <ProtectedRoute allowedUserIds={[1]}>  
               <AddPatient />
             </ProtectedRoute>
           }
@@ -52,7 +52,7 @@ const RoutesComponent = () => {
         <Route
           path="/Logout"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  {/* User IDs 1 and 2 can access */}
+            <ProtectedRoute allowedUserIds={[1, 2]}> 
               <Logout />
             </ProtectedRoute>
           }

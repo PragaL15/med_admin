@@ -69,7 +69,7 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                   return;
               }
   
-              const response = await axios.post('http://localhost:8080/api/patientDetails', patientData, {
+              const response = await axios.post('http://localhost:8080/patientDetails', patientData, {
                   headers: {
                       "Authorization": `Bearer ${token}`, // Add the token to the Authorization header
                       "Content-Type": "application/json"
