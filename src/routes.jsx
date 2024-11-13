@@ -7,6 +7,7 @@ import Login from "./pages/login";
 import PastRecord from "./pages/PastRecord";
 import AddPatient from "./pages/PatientAdd";
 import Logout from "./pages/logout";
+import AppointMent from "./pages/AppointmentBooking";
 import ProtectedRoute from "./components/ProtectedRoutes"; // Import ProtectedRoute component
 
 const RoutesComponent = () => {
@@ -22,6 +23,14 @@ const RoutesComponent = () => {
           element={
             <ProtectedRoute allowedUserIds={[1, 2]}>  
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/AppointmentBooking"
+          element={
+            <ProtectedRoute allowedUserIds={[2]}>  
+              <AppointMent />
             </ProtectedRoute>
           }
         />

@@ -23,6 +23,7 @@ const Sidebar = ({ children }) => {
     const allItems = [
         { label: 'Home', icon: 'pi pi-home', route: '/dashboard', allowedUserIds: [1, 2] },
         { label: 'Record', icon: 'pi pi-file', route: '/Record', allowedUserIds: [1] },
+        { label: 'AppointBooking', icon: 'pi pi-file', route: '/AppointmentBooking', allowedUserIds: [2] },
         { label: 'Past Record', icon: 'pi pi-history', route: '/pastrec', allowedUserIds: [1, 2] },
         { label: 'New Patient Details', icon: 'pi pi-user-plus', route: '/AddPatient', allowedUserIds: [1] },
         { label: 'Logout', icon: 'pi pi-sign-out', route: '/logout', allowedUserIds: [1, 2] }
