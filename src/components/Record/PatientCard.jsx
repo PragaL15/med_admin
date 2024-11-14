@@ -14,7 +14,7 @@ import Nodata from "../../../public/Nodata.png";
 export default function PatientCard() {
   const [selectedPid, setSelectedPid] = useState(null);
   const [patientDetails, setPatientDetails] = useState(null);
-  const [Pids, setPids] = useState([]);
+  const [p_id, setP_id] = useState([]);
   const [recordedText, setRecordedText] = useState("");
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -30,7 +30,7 @@ export default function PatientCard() {
   };
  // Fetch patient IDs with Authorization header
  useEffect(() => {
-  const fetchPids = async () => {
+  const fetchPID = async () => {
     try {
       const token = getAuthToken();
       if (token) {
@@ -38,7 +38,7 @@ export default function PatientCard() {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("PIDs API Response:", response.data);
-        setPids(response.data);
+        setP_id(response.data);
       } else {
         console.error("Unable to fetch PIDs due to missing token.");
       }
@@ -51,7 +51,7 @@ export default function PatientCard() {
       }
     }
   };
-  fetchPids();
+  fetchPID();
 }, []);
 
 // Fetch patient details with Authorization header
@@ -143,27 +143,36 @@ useEffect(() => {
   // Send audio to backend with WAV conversion and save the converted text
   const sendAudio = async (blob) => {
     try {
+      // Convert Blob to ArrayBuffer and then decode audio data
       const arrayBuffer = await blob.arrayBuffer();
       const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
+  
+      // Ensure we handle cases with multiple channels if needed
+      const channelData = audioBuffer.numberOfChannels > 1 
+        ? Array.from({ length: audioBuffer.numberOfChannels }, (_, i) => audioBuffer.getChannelData(i))
+        : [audioBuffer.getChannelData(0)]; // Default to mono channel
+  
+      // Encode to WAV format
       const wavBuffer = await WavEncoder.encode({
         sampleRate: audioBuffer.sampleRate,
-        channelData: [audioBuffer.getChannelData(0)], // Mono channel
+        channelData: channelData,
       });
-
+  
       const wavBlob = new Blob([wavBuffer], { type: "audio/wav" });
-
+  
+      // Prepare FormData
       const formData = new FormData();
       formData.append("audio_data", wavBlob, "audio.wav");
-
+  
+      // Send POST request to the server
       const response = await axios.post("http://localhost:5000/convert", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
+  
+      // Handle response
       if (response.data && response.data.text) {
-        const convertedText = response.data.text;
-        setRecordedText(convertedText);
+        setRecordedText(response.data.text);
       } else if (response.data && response.data.error) {
         setRecordedText(response.data.error);
       } else {
@@ -210,7 +219,7 @@ useEffect(() => {
           <Dropdown
             value={selectedPid}
             onChange={(e) => setSelectedPid(e.value)}
-            options={Pids}
+            options={p_id}
             optionLabel="p_id"
             placeholder="Select a PID"
             filter
