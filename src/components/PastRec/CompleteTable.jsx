@@ -81,28 +81,32 @@ export default function DataRecord() {
         operator: FilterOperator.AND,
         constraints: [{ value: "", matchMode: FilterMatchMode.STARTS_WITH }],
       },
-      // Additional filters for other columns can be initialized here
+     
     });
   };
 
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
-    let _filters = { ...filters };
-    _filters["global"].value = value;
-    setFilters(_filters);
-    setGlobalFilterValue(value);
+    setGlobalFilterValue(value);  
+  
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      global: { ...prevFilters.global, value },
+    }));
   };
-
+  
   const clearFilter = () => {
-    initFilters();
-    setGlobalFilterValue("");
+    initFilters(); 
+    setGlobalFilterValue("");  
   };
-
+  
   const applyFilter = () => {
-    let _filters = { ...filters };
-    _filters["global"].value = globalFilterValue;
-    setFilters(_filters);
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      global: { ...prevFilters.global, value: globalFilterValue },
+    }));
   };
+  
 
   const renderHeader = () => {
     return (
@@ -180,39 +184,38 @@ export default function DataRecord() {
           <Column
             field="patient_id"
             header="Patient ID"
-            filter
-            filterPlaceholder="Search by Patient ID"
+            // filter
+            // filterPlaceholder="Search by Patient ID"
           />
           <Column
             field="name"
             header="Name"
-            filter
-            filterPlaceholder="Search by Name"
+            // filter
+            // filterPlaceholder="Search by Name"
           />
           <Column
             field="date"
             header="Date"
             body={dateBodyTemplate}
-            filter
-            filterElement={dateFilterTemplate}
+            // filter
+            // filterElement={dateFilterTemplate}
           />
           <Column
             field="drName"
             header="Dr. Name"
-            filter
-            filterPlaceholder="Search by Dr. Name"
+            // filter
+            // filterPlaceholder="Search by Dr. Name"
           />
           <Column
             field="description"
             header="Description"
-            filter
-            filterPlaceholder="Search by Description"
+           
           />
           <Column
             field="prescription"
             header="Prescription"
-            filter
-            filterPlaceholder="Search by Prescription"
+            // filter
+            // filterPlaceholder="Search by Prescription"
           />
         </DataTable>
       </div>
