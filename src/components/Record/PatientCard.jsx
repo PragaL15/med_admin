@@ -254,7 +254,7 @@ useEffect(() => {
             onClick={startRecording}
             icon={<MicIcon />}
             label="Start"
-            className="bg-green-600 text-white p-2"
+            className="bg-green-600 text-white p-2 ml-4"
             disabled={isRecording || isPaused}
           />
           <Button
