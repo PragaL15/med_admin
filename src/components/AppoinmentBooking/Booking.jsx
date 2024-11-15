@@ -12,7 +12,7 @@ const AppointmentForm = () => {
         d_id: '',
         time: '',
         problem_hint: '',
-        appo_status: 'initiated'  // Default status
+        appo_status: 'initiated' 
     });
     const [error, setError] = useState(null);
     const [patients, setPatients] = useState([]);
@@ -23,7 +23,7 @@ const AppointmentForm = () => {
         const fetchData = async () => {
             try {
                 const response = await axiosInstance.get('api/appointments/doctors-patients');
-                console.log(response.data);  // Log the full response to check its structure
+                console.log(response.data); 
                 setPatients(response.data.patients);
                 setDoctors(response.data.doctors);
             } catch (error) {
@@ -82,8 +82,7 @@ const AppointmentForm = () => {
             {error && <div className="mb-4 text-red-600">{error}</div>}
 
             <form onSubmit={handleSubmit}>
-                {/* Patient Dropdown */}
-                <div className="mb-4">
+                  <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Patient:</label>
                     <Dropdown
                         value={formData.p_id}
@@ -98,7 +97,6 @@ const AppointmentForm = () => {
                     />
                 </div>
 
-                {/* Appointment Date */}
                 <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Appointment Date:</label>
                     <InputText
@@ -110,7 +108,6 @@ const AppointmentForm = () => {
                     />
                 </div>
 
-                {/* Patient Health Status */}
                 <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Patient Health Status:</label>
                     <InputText
@@ -122,8 +119,7 @@ const AppointmentForm = () => {
                     />
                 </div>
 
-                {/* Doctor Dropdown */}
-                <div className="mb-4">
+                 <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Doctor:</label>
                     <Dropdown
                         value={formData.d_id}
@@ -137,8 +133,6 @@ const AppointmentForm = () => {
                         placeholder="Select doctor"
                     />
                 </div>
-
-                {/* Time */}
                 <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Time:</label>
                     <InputText
@@ -149,8 +143,6 @@ const AppointmentForm = () => {
                         placeholder="Enter appointment time"
                     />
                 </div>
-
-                {/* Problem Hint */}
                 <div className="mb-4">
                     <label className="text-lg font-medium text-gray-700">Problem Hint:</label>
                     <InputText
@@ -162,7 +154,6 @@ const AppointmentForm = () => {
                     />
                 </div>
 
-                {/* Submit Button */}
                 <Button
                     label="Create Appointment"
                     type="submit"
