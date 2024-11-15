@@ -16,10 +16,9 @@ const Sidebar = ({ children }) => {
 
     const handleNavigation = (route) => {
         navigate(route);
-        setIsMenuVisible(false); // Close the menu after navigation
+        setIsMenuVisible(false); 
     };
 
-    // Define all possible menu items
     const allItems = [
         { label: 'Home', icon: 'pi pi-home', route: '/dashboard', allowedUserIds: [1, 2] },
         { label: 'Record', icon: 'pi pi-file', route: '/Record', allowedUserIds: [1] },
@@ -32,18 +31,16 @@ const Sidebar = ({ children }) => {
     // Filter the menu items based on user_id
     const items = allItems.filter(item => item.allowedUserIds.includes(Number(userId)));
 
-    // Update the active item based on the current route
     useEffect(() => {
         const currentRoute = location.pathname;
         const activeItem = items.find(item => item.route === currentRoute);
         setActiveItem(activeItem ? activeItem.label : null);
-    }, [location.pathname, items]); // Re-run on route change
+    }, [location.pathname, items]); 
 
     return (
         <>
             {isMenuVisible && <div className="fixed inset-0 opacity-50 z-40 h-full bg-black" onClick={toggleMenu}></div>}
 
-            {/* Mobile Menu Toggle Button */}
             {!isMenuVisible && (
                 <div className="md:hidden">
                     <Button
