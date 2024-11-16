@@ -45,7 +45,7 @@ export default function AppointmentsDemo() {
         }
 
         // Fetching appointments data
-        fetch("http://localhost:8080/api/AppointmentTable", {
+        fetch("http://localhost:8080/api/dashboard/AppointmentTable", {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
@@ -61,7 +61,7 @@ export default function AppointmentsDemo() {
         .catch((error) => console.error("Error fetching appointments:", error));
 
         // Fetching admitted data
-        fetch("http://localhost:8080/api/AdmittedTable", {
+        fetch("http://localhost:8080/api/dashboard/AdmittedTable", {
             headers: {
                 "Authorization": `Bearer ${token}`,
                 "Content-Type": "application/json"
