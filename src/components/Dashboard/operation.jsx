@@ -19,7 +19,7 @@ export function UrgentNotificationTable() {
             }
     
             try {
-                const response = await fetch("http://localhost:8080/api/RecentOperation", {
+                const response = await fetch("http://localhost:8080/api/dashboard/RecentOperation", {
                     method: "GET",
                     headers: {
                         "Authorization": `Bearer ${token}`,
