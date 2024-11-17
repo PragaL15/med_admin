@@ -7,8 +7,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "side-blue": "#335c67",
+        "side-blue": "#0d47a1",
         "theme-color": "#f6fff8",
+        'custom-blue': '#e3f2fd',
+        "pale-blue":'#e3f2fd'
       },
       height: {
         "88": "22rem",

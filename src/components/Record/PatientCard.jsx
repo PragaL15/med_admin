@@ -134,7 +134,7 @@ useEffect(() => {
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach((track) => track.stop()); // Stop mic input
+      mediaRecorder.stream.getTracks().forEach((track) => track.stop()); 
       setIsRecording(false);
       setIsPaused(false);
     }

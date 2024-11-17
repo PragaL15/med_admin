@@ -15,7 +15,7 @@ export default function PatientStatusGraph() {
             }
 
             try {
-                const response = await fetch('http://localhost:8080/api/patient-status', {
+                const response = await fetch('http://localhost:8080/api/dashboard/patient-status', {
                     headers: {
                         "Authorization": `Bearer ${token}`,
                         "Content-Type": "application/json"

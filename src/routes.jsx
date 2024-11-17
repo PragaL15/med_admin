@@ -21,7 +21,7 @@ const RoutesComponent = () => {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  
+            <ProtectedRoute allowedUserIds={[1]}>  
               <Dashboard />
             </ProtectedRoute>
           }
@@ -37,7 +37,7 @@ const RoutesComponent = () => {
         <Route
           path="/record"
           element={
-            <ProtectedRoute allowedUserIds={[1, 2]}>  
+            <ProtectedRoute allowedUserIds={[1]}>  
               <Record />
             </ProtectedRoute>
           }
