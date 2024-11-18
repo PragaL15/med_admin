@@ -35,6 +35,7 @@ export default function DataRecord() {
     }
 
     try {
+      console.log("Fetching data from APIs...");
       const [recordsResponse, patientsResponse, doctorsResponse] = await Promise.all([
         fetch("http://localhost:8080/api/records", {
           headers: { Authorization: `Bearer ${token}` },
@@ -47,6 +48,10 @@ export default function DataRecord() {
         }),
       ]);
 
+      console.log("Records Response:", recordsResponse);
+      console.log("Patients Response:", patientsResponse);
+      console.log("Doctors Response:", doctorsResponse);
+
       if (!recordsResponse.ok || !patientsResponse.ok || !doctorsResponse.ok) {
         throw new Error("Failed to fetch data. Please check your credentials or try again later.");
       }
@@ -55,17 +60,22 @@ export default function DataRecord() {
       const patientsData = await patientsResponse.json();
       const doctorsData = await doctorsResponse.json();
 
+      console.log("Records Data:", recordsData);
+      console.log("Patients Data:", patientsData);
+      console.log("Doctors Data:", doctorsData);
+
       const combinedData = recordsData.map((record) => {
         const patient = patientsData.find((p) => p.p_id === record.p_id) || {};
         const doctor = doctorsData.find((d) => d.doctor_id === record.doctor_id) || {};
         return {
           ...record,
           patient_id: patient.p_id,
-          name: patient.p_name,
+          name: patient.name,
           drName: doctor.d_name || "Unknown",
         };
       });
 
+      console.log("Combined Data:", combinedData);
       setRecords(combinedData);
       setLoading(false);
     } catch (error) {
@@ -81,32 +91,30 @@ export default function DataRecord() {
         operator: FilterOperator.AND,
         constraints: [{ value: "", matchMode: FilterMatchMode.STARTS_WITH }],
       },
-     
     });
   };
 
   const onGlobalFilterChange = (e) => {
     const value = e.target.value;
-    setGlobalFilterValue(value);  
-  
+    setGlobalFilterValue(value);
+
     setFilters((prevFilters) => ({
       ...prevFilters,
       global: { ...prevFilters.global, value },
     }));
   };
-  
+
   const clearFilter = () => {
-    initFilters(); 
-    setGlobalFilterValue("");  
+    initFilters();
+    setGlobalFilterValue("");
   };
-  
+
   const applyFilter = () => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       global: { ...prevFilters.global, value: globalFilterValue },
     }));
   };
-  
 
   const renderHeader = () => {
     return (
@@ -150,18 +158,6 @@ export default function DataRecord() {
     });
   };
 
-  const dateFilterTemplate = (options) => {
-    return (
-      <Calendar
-        value={options.value}
-        onChange={(e) => options.filterCallback(e.value, options.index)}
-        dateFormat="mm/dd/yy"
-        placeholder="mm/dd/yyyy"
-        mask="99/99/9999"
-      />
-    );
-  };
-
   const header = renderHeader();
 
   return (
@@ -181,42 +177,12 @@ export default function DataRecord() {
           emptyMessage="No records found."
           className="md:mt-0 mt-7"
         >
-          <Column
-            field="patient_id"
-            header="Patient ID"
-            // filter
-            // filterPlaceholder="Search by Patient ID"
-          />
-          <Column
-            field="name"
-            header="Name"
-            // filter
-            // filterPlaceholder="Search by Name"
-          />
-          <Column
-            field="date"
-            header="Date"
-            body={dateBodyTemplate}
-            // filter
-            // filterElement={dateFilterTemplate}
-          />
-          <Column
-            field="drName"
-            header="Dr. Name"
-            // filter
-            // filterPlaceholder="Search by Dr. Name"
-          />
-          <Column
-            field="description"
-            header="Description"
-           
-          />
-          <Column
-            field="prescription"
-            header="Prescription"
-            // filter
-            // filterPlaceholder="Search by Prescription"
-          />
+          <Column field="p_id" header="Patient ID" />
+          <Column field="name" header="Name" />
+          <Column field="date" header="Date" body={dateBodyTemplate} />
+          <Column field="drName" header="Dr. Name" />
+          <Column field="description" header="Description" />
+          <Column field="prescription" header="Prescription" />
         </DataTable>
       </div>
     </div>
