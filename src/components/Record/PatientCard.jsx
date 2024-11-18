@@ -14,7 +14,7 @@ import Nodata from "../../../public/Nodata.png";
 export default function PatientCard() {
   const [selectedPid, setSelectedPid] = useState(null);
   const [patientDetails, setPatientDetails] = useState(null);
-  const [p_id, setP_id] = useState([]);
+  const [pid, setPid] = useState([]);
   const [recordedText, setRecordedText] = useState("");
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -38,7 +38,7 @@ export default function PatientCard() {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("PIDs API Response:", response.data);
-        setP_id(response.data);
+        setPid(response.data);
       } else {
         console.error("Unable to fetch PIDs due to missing token.");
       }
@@ -54,7 +54,6 @@ export default function PatientCard() {
   fetchPID();
 }, []);
 
-// Fetch patient details with Authorization header
 useEffect(() => {
   const fetchPatientDetails = async () => {
     if (selectedPid) {
@@ -62,7 +61,7 @@ useEffect(() => {
         setIsLoading(true);
         const token = getAuthToken();
         if (token) {
-          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.p_id}`, {
+          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.pid}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           console.log("Patient Details API Response:", response.data);
@@ -77,7 +76,7 @@ useEffect(() => {
         } else {
           console.error("Error fetching patient details:", error);
         }
-        setPatientDetails(null); // Clear details if an error occurs
+        setPatientDetails(null); 
       } finally {
         setIsLoading(false);
       }
@@ -86,7 +85,6 @@ useEffect(() => {
   fetchPatientDetails();
 }, [selectedPid]);
 
-// Debugging: Log token, role, and user_id
 useEffect(() => {
     console.log("Auth Token:", localStorage.getItem("authToken"));
     console.log("Role:", localStorage.getItem("role"));
@@ -184,7 +182,6 @@ useEffect(() => {
     }
   };
 
-  // Submit converted text to backend
   const handleSubmit = async () => {
     if (!selectedPid || !recordedText) {
       alert("Please select a patient and ensure there is converted text.");
@@ -195,7 +192,7 @@ useEffect(() => {
     try {
       if (token) {
         await axios.put(
-          `http://localhost:8080/api/records/${selectedPid.p_id}/description`,
+          `http://localhost:8080/api/records/${selectedPid.pid}/description`,
           { description: recordedText },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -219,8 +216,8 @@ useEffect(() => {
           <Dropdown
             value={selectedPid}
             onChange={(e) => setSelectedPid(e.value)}
-            options={p_id}
-            optionLabel="p_id"
+            options={pid}
+            optionLabel="pid"
             placeholder="Select a PID"
             filter
             className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -231,16 +228,16 @@ useEffect(() => {
             ) : patientDetails ? (
               <div>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Name: <span className="font-normal text-gray-800">{patientDetails.p_name}</span>
+                  Name: <span className="font-normal text-gray-800">{patientDetails.name}</span>
                 </p>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Phone Number: <span className="font-normal text-gray-800">{patientDetails.p_number}</span>
+                  Phone Number: <span className="font-normal text-gray-800">{patientDetails.number}</span>
                 </p>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Email: <span className="font-normal text-gray-800">{patientDetails.p_email}</span>
+                  Email: <span className="font-normal text-gray-800">{patientDetails.email}</span>
                 </p>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Status: <span className="font-normal text-gray-800">{patientDetails.p_status}</span>
+                  Status: <span className="font-normal text-gray-800">{patientDetails.status}</span>
                 </p>
               </div>
             ) : (
