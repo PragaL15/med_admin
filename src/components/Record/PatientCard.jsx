@@ -14,7 +14,7 @@ import Nodata from "../../../public/Nodata.png";
 export default function PatientCard() {
   const [selectedPid, setSelectedPid] = useState(null);
   const [patientDetails, setPatientDetails] = useState(null);
-  const [pid, setPid] = useState([]);
+  const [p_id, setPid] = useState([]);
   const [recordedText, setRecordedText] = useState("");
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -61,7 +61,7 @@ useEffect(() => {
         setIsLoading(true);
         const token = getAuthToken();
         if (token) {
-          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.pid}`, {
+          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.p_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           console.log("Patient Details API Response:", response.data);
@@ -192,7 +192,7 @@ useEffect(() => {
     try {
       if (token) {
         await axios.put(
-          `http://localhost:8080/api/records/${selectedPid.pid}/description`,
+          `http://localhost:8080/api/records/${selectedPid.p_id}/description`,
           { description: recordedText },
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -216,8 +216,8 @@ useEffect(() => {
           <Dropdown
             value={selectedPid}
             onChange={(e) => setSelectedPid(e.value)}
-            options={pid}
-            optionLabel="pid"
+            options={p_id}
+            optionLabel="p_id"
             placeholder="Select a PID"
             filter
             className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -231,7 +231,7 @@ useEffect(() => {
                   Name: <span className="font-normal text-gray-800">{patientDetails.name}</span>
                 </p>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Phone Number: <span className="font-normal text-gray-800">{patientDetails.number}</span>
+                  Phone Number: <span className="font-normal text-gray-800">{patientDetails.phone}</span>
                 </p>
                 <p className="text-lg font-semibold text-blue-700 mb-2">
                   Email: <span className="font-normal text-gray-800">{patientDetails.email}</span>
