@@ -60,7 +60,6 @@ export default function AppointmentsDemo() {
         .then((data) => setAppointments(data))
         .catch((error) => console.error("Error fetching appointments:", error));
 
-        // Fetching admitted data
         fetch("http://localhost:8080/api/dashboard/AdmittedTable", {
             headers: {
                 "Authorization": `Bearer ${token}`,
