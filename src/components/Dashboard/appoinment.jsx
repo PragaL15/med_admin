@@ -16,7 +16,6 @@ export default function AppointmentsDemo() {
         return `${String(formattedHour).padStart(2, "0")}:${minutes} ${hour >= 12 ? "PM" : "AM"}`;
     };
 
-    // Custom button template for the appo_status column
     const statusButtonTemplate = (rowData) => {
         const statusLabel = rowData.appo_status;
         const statusClass = statusLabel === 'initiated'
@@ -35,9 +34,8 @@ export default function AppointmentsDemo() {
         );
     };
 
-    // Fetch data from the backend
     useEffect(() => {
-        const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+        const token = localStorage.getItem("authToken"); 
 
         if (!token) {
             console.error("No auth token found in localStorage");
