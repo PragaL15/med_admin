@@ -60,7 +60,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setLoading(false); // End loading
+      setLoading(false); 
       setError("An error occurred. Please try again later.");
     }
   };
@@ -101,7 +101,7 @@ const LoginPage = () => {
           <button
             type="submit"
             className={`w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
-            disabled={loading} // Disable button while loading
+            disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
