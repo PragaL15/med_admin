@@ -28,7 +28,6 @@ const Sidebar = ({ children }) => {
         { label: 'Logout', icon: 'pi pi-sign-out', route: '/logout', allowedUserIds: [1, 2] }
     ];
 
-    // Filter the menu items based on user_id
     const items = allItems.filter(item => item.allowedUserIds.includes(Number(userId)));
 
     useEffect(() => {
