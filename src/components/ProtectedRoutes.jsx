@@ -1,7 +1,5 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-
-// Function to retrieve user_id from localStorage
 const getUserId = () => {
   const userId = localStorage.getItem("user_id");
   return userId ? parseInt(userId) : null; 
