@@ -5,14 +5,12 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import MedicalInformationIcon from '@mui/icons-material/MedicalInformation';
 
-// Component for displaying the urgent notification table
 export function UrgentNotificationTable() {
     const [patients, setPatients] = useState([]);
 
-    // Fetch data from the backend when the component mounts
     useEffect(() => {
         const fetchPatients = async () => {
-            const token = localStorage.getItem("authToken"); // Retrieve token from localStorage
+            const token = localStorage.getItem("authToken"); 
             if (!token) {
                 console.error("No auth token found in localStorage");
                 return;
@@ -41,8 +39,6 @@ export function UrgentNotificationTable() {
         fetchPatients();
     }, []);
     
-
-    // Define the columns to display in the table
     const columns = [
         { field: 'id', header: 'ID' },
         { field: 'p_name', header: 'Patient Name' },
@@ -67,7 +63,6 @@ export function UrgentNotificationTable() {
     );
 }
 
-// Dialog component for displaying urgent notifications
 export function UrgentNotificationDialog() {
     const showUrgentNotification = () => {
         confirmDialog({
@@ -117,7 +112,6 @@ export function UrgentNotificationDialog() {
     );
 }
 
-// Main App component
 export default function App() {
     return (
         <div className="p-4 mt-10">
