@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginImage from "../../public/login1.png"; // Correct image import
 
@@ -8,6 +8,11 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false); // To manage loading state
   const navigate = useNavigate();
+
+  // Clear localStorage when the component mounts
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -60,7 +65,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error("Login error:", error);
-      setLoading(false); 
+      setLoading(false);
       setError("An error occurred. Please try again later.");
     }
   };
@@ -68,7 +73,6 @@ const LoginPage = () => {
   return (
     <div className="flex h-screen justify-center items-center bg-custom-blue">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-     
         <div className="flex justify-center mb-6">
           <img src={LoginImage} alt="Login" className="w-32 h-32 object-cover" />
         </div>
@@ -100,10 +104,12 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className={`w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none ${loading ? 'cursor-not-allowed opacity-50' : ''}`}
+            className={`w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none ${
+              loading ? "cursor-not-allowed opacity-50" : ""
+            }`}
             disabled={loading}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
       </div>
