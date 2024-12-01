@@ -211,7 +211,7 @@ useEffect(() => {
 
   return (
     <div className="inline w-full gap-4 mt-7 md:flex">
-      <Card title="Patient Details" className="w-full mt-6 md:w-1/2 md:mt-0">
+      <Card title="Patient Details" className="w-full mt-6 md:w-1/2 md:mt-0 bg-rec_bac">
         <div className="card inline justify-content-center">
           <Dropdown
             value={selectedPid}
@@ -220,9 +220,9 @@ useEffect(() => {
             optionLabel="p_id"
             placeholder="Select a PID"
             filter
-            className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <Card className="mt-4 flex items-center justify-center border-black">
+          <Card className="mt-4 flex items-center justify-center border-black bg-white">
             {isLoading ? (
               <p>Loading patient details...</p>
             ) : patientDetails ? (
@@ -278,7 +278,7 @@ useEffect(() => {
         </div>
       </Card>
 
-<Card className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4" title="Converted Text">
+<Card className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4  bg-rec_bac" title="Converted Text">
   <InputTextarea
     disabled
     rows={5}
