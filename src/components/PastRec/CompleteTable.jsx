@@ -35,7 +35,6 @@ export default function DataRecord() {
     }
 
     try {
-      console.log("Fetching data from APIs...");
       const [recordsResponse, patientsResponse, doctorsResponse] = await Promise.all([
         fetch("http://localhost:8080/api/records", {
           headers: { Authorization: `Bearer ${token}` },
@@ -48,10 +47,6 @@ export default function DataRecord() {
         }),
       ]);
 
-      console.log("Records Response:", recordsResponse);
-      console.log("Patients Response:", patientsResponse);
-      console.log("Doctors Response:", doctorsResponse);
-
       if (!recordsResponse.ok || !patientsResponse.ok || !doctorsResponse.ok) {
         throw new Error("Failed to fetch data. Please check your credentials or try again later.");
       }
@@ -59,10 +54,6 @@ export default function DataRecord() {
       const recordsData = await recordsResponse.json();
       const patientsData = await patientsResponse.json();
       const doctorsData = await doctorsResponse.json();
-
-      console.log("Records Data:", recordsData);
-      console.log("Patients Data:", patientsData);
-      console.log("Doctors Data:", doctorsData);
 
       const combinedData = recordsData.map((record) => {
         const patient = patientsData.find((p) => p.p_id === record.p_id) || {};
@@ -75,7 +66,6 @@ export default function DataRecord() {
         };
       });
 
-      console.log("Combined Data:", combinedData);
       setRecords(combinedData);
       setLoading(false);
     } catch (error) {
@@ -104,10 +94,6 @@ export default function DataRecord() {
     }));
   };
 
-  const clearFilter = () => {
-    initFilters();
-    setGlobalFilterValue("");
-  };
 
   const applyFilter = () => {
     setFilters((prevFilters) => ({
@@ -118,15 +104,8 @@ export default function DataRecord() {
 
   const renderHeader = () => {
     return (
-      <div className="flex justify-between items-center bg-slate-100">
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          outlined
-          onClick={clearFilter}
-          className="mr-24 bg-blue-500 p-3 text-white"
-        />
+      <div className="flex justify-between items-center">
+        
         <div className="flex items-center space-x-2">
           <IconField iconPosition="left">
             <InputIcon className="pi pi-search" />
@@ -134,7 +113,7 @@ export default function DataRecord() {
               value={globalFilterValue}
               onChange={onGlobalFilterChange}
               placeholder="Search by Name"
-              className="p-2 px-4 focus:outline-none focus:border-none"
+              className="p-2 px-4 ml-8 focus:outline-none focus:border-none"
             />
           </IconField>
         </div>
@@ -162,28 +141,60 @@ export default function DataRecord() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Patient Past Records</h1>
-      <div className="card">
-        <DataTable
-          value={records}
-          paginator
-          showGridlines
-          rows={5}
-          loading={loading}
-          dataKey="id"
-          filters={filters}
-          globalFilterFields={["name", "description", "prescription", "drName"]}
-          header={header}
-          emptyMessage="No records found."
-          className="md:mt-0 mt-7"
-        >
-          <Column field="p_id" header="Patient ID" />
-          <Column field="name" header="Name" />
-          <Column field="date" header="Date" body={dateBodyTemplate} />
-          <Column field="drName" header="Dr. Name" />
-          <Column field="description" header="Description" />
-          <Column field="prescription" header="Prescription" />
-        </DataTable>
+      <h1 className="text-2xl max-h-full font-bold mb-6 mt-4">Patient Past Records</h1>
+      <div className="">
+      <DataTable
+  value={records}
+  paginator
+  showGridlines
+  rows={2}
+  loading={loading}
+  dataKey="id"
+  filters={filters}
+  globalFilterFields={["name", "description", "prescription", "drName"]}
+  header={header}
+  emptyMessage="No records found."
+  className="md:mt-0 mt-7 mb-10 rounded-md overflow-hidden shadow-lg border border-gray-200"
+>
+  <Column
+    field="p_id"
+    header="Patient ID"
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+  <Column
+    field="name"
+    header="Name"
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+  <Column
+    field="date"
+    header="Date"
+    body={dateBodyTemplate}
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+  <Column
+    field="drName"
+    header="Dr. Name"
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+  <Column
+    field="description"
+    header="Description"
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+  <Column
+    field="prescription"
+    header="Prescription"
+    headerClassName="bg-slate-100 border-b border-gray-300"
+    bodyClassName="border-b border-gray-300"
+  />
+</DataTable>
+
       </div>
     </div>
   );
