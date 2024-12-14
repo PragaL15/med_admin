@@ -21,10 +21,10 @@ const Dashboard = () => {
           </div>
           <PatientRecoveryGraph/>
           </div>
-          
-          {/* <div className='inline'>
+
+          <div className='inline'>
           <Appoinment/>
-          </div> */}
+          </div>
 
           </div>
         </div>     
