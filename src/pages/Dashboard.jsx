@@ -19,12 +19,11 @@ const Dashboard = () => {
           <Operation/>
           <NoPatients/>
           </div>
-          <PatientRecoveryGraph/>
+          {/* <PatientRecoveryGraph/> */}
           </div>
-          <div className='inline'>
+          {/* <div className='inline'>
           <Appoinment/>
-          </div>
-         
+          </div> */}
           </div>
         </div>     
     </>
