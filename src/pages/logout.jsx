@@ -5,11 +5,11 @@ const LogoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.clear();  // Clear localStorage when the component mounts
-    navigate("/login");    // Redirect to the login page
+    localStorage.clear();  
+    navigate("/login");    
   }, [navigate]);
 
-  return null; // No UI rendering needed as the user is redirected
+  return null; 
 };
 
 export default LogoutPage;
