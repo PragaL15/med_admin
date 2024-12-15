@@ -21,7 +21,6 @@ const Dashboard = () => {
           </div>
           <PatientRecoveryGraph/>
           </div>
-
           <div className='inline'>
           <Appoinment/>
           </div>
