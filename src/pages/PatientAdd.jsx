@@ -4,7 +4,6 @@ import PatientAdd from '../components/AddPatient/AddPatients'
 import TopBar from '../components/topNav';
 const AddPatients = () => {
   return (
- 
         <div className='h-screen'>
           <TopBar/>
         <Sidebar /> 
