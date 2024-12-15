@@ -24,7 +24,6 @@ const Dashboard = () => {
           <div className='inline'>
           <Appoinment/>
           </div>
-
           </div>
         </div>     
     </>
