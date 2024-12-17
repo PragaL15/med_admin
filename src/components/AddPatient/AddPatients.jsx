@@ -30,7 +30,7 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
         { label: 'Female', value: 'Female' },
     ];
 
-    // Handle form submission
+  
     const handleSubmit = async () => {
         const newErrors = {};
 
