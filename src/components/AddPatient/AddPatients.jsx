@@ -29,12 +29,8 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
         { label: 'Male', value: 'Male' },
         { label: 'Female', value: 'Female' },
     ];
-
-  
     const handleSubmit = async () => {
         const newErrors = {};
-
-        // Validate all fields
         if (!name) newErrors.name = 'Name is required';
         if (!phone) {
             newErrors.phone = 'Phone number is required';
@@ -58,7 +54,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
             alert('Please fill in all required fields.');
             return;
         }
-
         const patientData = {
             p_name: name,
             p_number: phone,
