@@ -68,7 +68,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
                 alert("Authorization token is missing. Please log in again.");
                 return;
             }
-
             const response = await axios.post('http://localhost:8080/api/details/patientDetails', patientData, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
