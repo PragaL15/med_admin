@@ -5,7 +5,6 @@ import { Button } from 'primereact/button';
 import axios from 'axios';
 
 export default function PatientForm({ goToStepper = () => {}, exitStepper = () => {} }) {
-    // State variables for each patient field
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -15,7 +14,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
     const [age, setAge] = useState('');
     const [gender, setGender] = useState('');
     const [errors, setErrors] = useState({});
-
     const statusOptions = [
         { label: 'Active', value: 'Active' },
         { label: 'Inactive', value: 'Inactive' },
