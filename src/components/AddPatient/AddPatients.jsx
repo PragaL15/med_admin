@@ -91,7 +91,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
             }
         }
     };
-
     return (
         <div className="w-full p-6 bg-transparent">
             <h1 className="text-2xl font-bold mb-6">Add Patient Details</h1>
