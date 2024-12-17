@@ -16,7 +16,6 @@ export default function PatientForm({ goToStepper = () => {}, exitStepper = () =
     const [gender, setGender] = useState('');
     const [errors, setErrors] = useState({});
 
-    // Options for Dropdowns
     const statusOptions = [
         { label: 'Active', value: 'Active' },
         { label: 'Inactive', value: 'Inactive' },
