@@ -54,9 +54,9 @@ const LoginPage = () => {
 
         // Redirect based on user_id
         if (data.user_id === 1) {
-          navigate("/dashboard");
+          navigate("/record");
         } else if (data.user_id === 2) {
-          navigate("/AppointmentBooking");
+          navigate("/pastrec");
         } else {
           navigate("/");
         }
