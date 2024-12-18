@@ -108,15 +108,13 @@ export default function PatientForm({
   };
 
   return (
-    <div className="w-full p-6 bg-transparent">
-      <h1 className="text-2xl font-bold mb-6">Add Patient Details</h1>
-      <div className="w-full p-6 bg-white border rounded-lg shadow-lg space-y-6">
-        {/* Name Fields */}
+      <div className="w-full p-6 bg-rec_bac ">
+      <h1 className="text-2xl font-bold mb-6 ">Add Patient Details</h1>
+  {/* which div I need to wrap and have a max height */}
+  <div className="w-full max-h-96 p-6 border rounded-lg shadow-lg space-y-6 bg-Add_details_bac overflow-y-auto">
         <div className="flex">
           <div className="ml-4 w-1/2">
-            <label className="label-class">
-              First Name:
-            </label>
+            <label className="label-class">First Name:</label>
             <InputText
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -128,9 +126,7 @@ export default function PatientForm({
             )}
           </div>
           <div className="ml-4 w-1/2">
-            <label className="label-class">
-              Last Name:
-            </label>
+            <label className="label-class">Last Name:</label>
             <InputText
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
@@ -146,9 +142,7 @@ export default function PatientForm({
         {/* Phone and Email */}
         <div className="flex">
           <div className="ml-4 w-1/2">
-            <label className="label-class">
-              Phone Number:
-            </label>
+            <label className="label-class">Phone Number:</label>
             <InputText
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
@@ -200,9 +194,7 @@ export default function PatientForm({
             )}
           </div>
           <div className="ml-4 w-1/3">
-            <label className="label-class">
-              Pincode:
-            </label>
+            <label className="label-class">Pincode:</label>
             <InputText
               value={pincode}
               onChange={(e) => setPincode(e.target.value)}
@@ -230,9 +222,7 @@ export default function PatientForm({
             )}
           </div>
           <div className="ml-4 w-1/2">
-            <label className="label-class">
-              Date of Birth:
-            </label>
+            <label className="label-class">Date of Birth:</label>
             <InputText
               value={dob}
               onChange={(e) => setDob(e.target.value)}
@@ -245,21 +235,21 @@ export default function PatientForm({
             )}
           </div>
         </div>
-<div className="flex">
-        <div className="ml-4 w-1/3">
-          <label className="label-class">Gender:</label>
-          <Dropdown
-            value={gender}
-            options={genderOptions}
-            onChange={(e) => setGender(e.value)}
-            className="input-class-drop"
-            placeholder="Select gender"
-          />
-          {errors.gender && (
-            <span className="text-red-500 text-sm">{errors.gender}</span>
-          )}
-        </div>
-        <div className="ml-4 w-1/3">
+        <div className="flex">
+          <div className="ml-4 w-1/3">
+            <label className="label-class">Gender:</label>
+            <Dropdown
+              value={gender}
+              options={genderOptions}
+              onChange={(e) => setGender(e.value)}
+              className="input-class-drop"
+              placeholder="Select gender"
+            />
+            {errors.gender && (
+              <span className="text-red-500 text-sm">{errors.gender}</span>
+            )}
+          </div>
+          <div className="ml-4 w-1/3">
             <label className="label-class">Occupation:</label>
             <InputText
               value={age}
@@ -284,13 +274,13 @@ export default function PatientForm({
             )}
           </div>
         </div>
-        {/* Submit */}
-        <Button
-          label="Submit"
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-6 py-2 mt-4 rounded-md hover:bg-blue-600 w-24"
-        />
+    
       </div>
+      <Button
+        label="Submit"
+        onClick={handleSubmit}
+        className="bg-blue-500 text-white px-6 py-2 mt-4 mb-4 rounded-md hover:bg-blue-600 w-24"
+      />
     </div>
   );
 }

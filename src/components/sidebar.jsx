@@ -59,19 +59,20 @@ const Sidebar = ({ children }) => {
 
         
             <div
-                className={`fixed top-0 left-0 h-screen w-52 p-4 bg-side-blue z-50 transform transition-transform duration-300 ${
+                className={`fixed top-0 left-0 h-screen w-52 p-4 bg-side-bar z-50 transform transition-transform duration-300 ${
                     isMenuVisible ? 'translate-x-0' : '-translate-x-full'
                 } md:translate-x-0`}
             >
-                <h2 className="text-white text-2xl font-medium text-center pb-4">Med Records</h2>
+                <h2 className="text-black text-2xl font-medium text-center pb-4">Med Records</h2>
                 {items.map((item) => (
                     <div
                         key={item.label}
-                        className={`flex items-center gap-4 p-3 text-white text-lg rounded-lg cursor-pointer transition-colors ${
-                            activeItem === item.label
-                                ? 'bg-opacity-20 bg-white border border-gray-200'
-                                : 'hover:bg-gray-50 hover:text-side-blue mt-2 mb-2'
+                        className={`flex items-center gap-4 p-3 text-black text-lg rounded-lg cursor-pointer transition-colors focus:outline-none focus:bg-gray-200 ${
+                            activeItem === item
+                                ? 'bg-white text-side-blue border border-gray-200'
+                                : 'hover:bg-gray-50 active:bg-gray-50 hover:text-side-blue mt-2 mb-2'
                         }`}
+                        
                         onClick={() => {
                             setActiveItem(item.label);
                             handleNavigation(item.route);

@@ -129,10 +129,10 @@ const AppointmentForm = () => {
     };
   
     return (
-        <div className="w-full p-4 bg-transparent inline">
+        <div className="w-full p-4 bg-rec_bac inline">
             <h2 className="text-2xl font-bold mb-4 mt-10">Create New Appointment</h2>
-            <div className="inline h-screen bg-white overflow-hidden w-full">
-                <div className="w-full max-h-96 overflow-y-auto p-6 bg-white border border-gray-200 rounded-lg shadow-lg">
+            <div className="inline h-screen bg-Add_details_bac overflow-hidden w-full">
+                <div className="w-full max-h-96 overflow-y-auto p-6 bg-Add_details_bac border border-gray-200 rounded-lg shadow-lg">
                     {error && <div className="mb-4 text-red-600">{error}</div>}
 
                     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
@@ -148,6 +148,21 @@ const AppointmentForm = () => {
                                 name="p_id"
                                 className="input-class-drop"
                                 placeholder="Select patient"
+                            />
+                        </div>
+
+                        <div className="ml-4">
+                            <label className="label-class">Doctor:</label>
+                            <Dropdown
+                                value={formData.d_id}
+                                options={doctors.map((doctor) => ({
+                                    label: `${doctor.d_name} - ${doctor.d_id}`,
+                                    value: doctor.d_id,
+                                }))}
+                                onChange={(e) => setFormData((prev) => ({ ...prev, d_id: e.value }))}
+                                name="d_id"
+                                className="input-class-drop"
+                                placeholder="Select doctor"
                             />
                         </div>
 
@@ -193,20 +208,7 @@ const AppointmentForm = () => {
                             />
                         </div>
 
-                        <div className="ml-4">
-                            <label className="label-class">Doctor:</label>
-                            <Dropdown
-                                value={formData.d_id}
-                                options={doctors.map((doctor) => ({
-                                    label: `${doctor.d_name} - ${doctor.d_id}`,
-                                    value: doctor.d_id,
-                                }))}
-                                onChange={(e) => setFormData((prev) => ({ ...prev, d_id: e.value }))}
-                                name="d_id"
-                                className="input-class-drop"
-                                placeholder="Select doctor"
-                            />
-                        </div>
+                      
 
                         <div className="ml-4">
                             <label className="label-class">Current Medications:(if any)</label>

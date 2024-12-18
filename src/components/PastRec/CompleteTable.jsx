@@ -104,17 +104,19 @@ export default function DataRecord() {
 
   const renderHeader = () => {
     return (
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center ">
         
         <div className="flex items-center space-x-2">
           <IconField iconPosition="left">
-            <InputIcon className="pi pi-search" />
+           
+            <InputIcon className="pi pi-search w-8 h-8 border border-gray-300 rounded-md p-2 mr-10" />
             <InputText
               value={globalFilterValue}
               onChange={onGlobalFilterChange}
               placeholder="Search by Name"
-              className="p-2 px-4 ml-8 focus:outline-none focus:border-none"
+              className="input-class-inp ml-16 mt-3"
             />
+            
           </IconField>
         </div>
         <Button
@@ -140,9 +142,9 @@ export default function DataRecord() {
   const header = renderHeader();
 
   return (
-    <div>
-      <h1 className="text-2xl max-h-full font-bold mb-6 mt-4">Patient Past Records</h1>
-      <div className="">
+    <div >
+      <h1 className="text-2xl max-h-full font-bold mb-6 mt-4 ">Patient Past Records</h1>
+      <div className="bg-bg-Add_details_bac">
       <DataTable
   value={records}
   paginator
@@ -154,44 +156,44 @@ export default function DataRecord() {
   globalFilterFields={["name", "description", "prescription", "drName"]}
   header={header}
   emptyMessage="No records found."
-  className="md:mt-0 mt-7 mb-10 rounded-md overflow-hidden shadow-lg border border-gray-200"
+  className="md:mt-0 mt-7 mb-10 rounded-md overflow-hidden shadow-lg border border-gray-200 bg-Add_details_bac"
 >
   <Column
     field="p_id"
     header="Patient ID"
     headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
   <Column
     field="name"
     header="Name"
-    headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    headerClassName="bg-slate-100 border-b bg-Add_details_bac border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
   <Column
     field="date"
     header="Date"
     body={dateBodyTemplate}
-    headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    headerClassName="bg-slate-100 border-b bg-Add_details_bac border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
   <Column
     field="drName"
     header="Dr. Name"
-    headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    headerClassName="bg-slate-100 border-b bg-Add_details_bac border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
   <Column
     field="description"
     header="Description"
-    headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    headerClassName="bg-slate-100 border-b bg-Add_details_bac border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
   <Column
     field="prescription"
     header="Prescription"
-    headerClassName="bg-slate-100 border-b border-gray-300"
-    bodyClassName="border-b border-gray-300"
+    headerClassName="bg-slate-100 border-b bg-Add_details_bac border-gray-300"
+    bodyClassName="border-b border-gray-300 bg-Add_details_bac"
   />
 </DataTable>
 

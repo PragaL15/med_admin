@@ -85,7 +85,7 @@ const LoginPage = () => {
               type="text"
               value={username}
               onChange={handleUsernameChange}
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-class-inp"
               placeholder="Enter your username"
               required
             />
@@ -96,7 +96,7 @@ const LoginPage = () => {
               type="password"
               value={password}
               onChange={handlePasswordChange}
-              className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-class-inp"
               placeholder="Enter your password"
               required
             />
