@@ -42,10 +42,9 @@ const LoginPage = () => {
 
       const data = await response.json();
 
-      setLoading(false); // End loading
+      setLoading(false); 
 
       if (response.ok && data.status) {
-        // Store token, role, and user_id in localStorage
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("role", data.role);
         localStorage.setItem("user_id", data.user_id);
