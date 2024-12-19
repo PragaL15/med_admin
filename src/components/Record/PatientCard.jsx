@@ -333,7 +333,6 @@ export default function PatientCard() {
     className="bg-blue-600 text-white p-2 mt-3"
   />
 </Card>
-
     </div>
   );
 }
