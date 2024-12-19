@@ -325,7 +325,8 @@ export default function PatientCard() {
     rows={5}
     value={recordedText}
     className="w-full h-60 border-2 border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    placeholder="Converted text will appear here..."
+    placeholder=
+    "Converted text will appear here..."
   />
   <Button
     onClick={handleSubmit}
