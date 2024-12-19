@@ -28,69 +28,76 @@ export default function PatientCard() {
     }
     return token;
   };
- // Fetch patient IDs with Authorization header
- useEffect(() => {
-  const fetchPID = async () => {
-    try {
-      const token = getAuthToken();
-      if (token) {
-        const response = await axios.get("http://localhost:8080/api/patients", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log("PIDs API Response:", response.data);
-        setPid(response.data);
-      } else {
-        console.error("Unable to fetch PIDs due to missing token.");
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        console.error("Unauthorized access - redirecting to login.");
-        // Redirect to login or show a notification for re-authentication
-      } else {
-        console.error("Error fetching PIDs:", error);
-      }
-    }
-  };
-  fetchPID();
-}, []);
-
-useEffect(() => {
-  const fetchPatientDetails = async () => {
-    if (selectedPid) {
+  // Fetch patient IDs with Authorization header
+  useEffect(() => {
+    const fetchPID = async () => {
       try {
-        setIsLoading(true);
         const token = getAuthToken();
         if (token) {
-          const response = await axios.get(`http://localhost:8080/api/patients/${selectedPid.p_id}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-          console.log("Patient Details API Response:", response.data);
-          setPatientDetails(response.data);
+          const response = await axios.get(
+            "http://localhost:8080/api/patients",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          console.log("PIDs API Response:", response.data);
+          setPid(response.data);
         } else {
-          console.error("Unable to fetch patient details due to missing token.");
+          console.error("Unable to fetch PIDs due to missing token.");
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {
           console.error("Unauthorized access - redirecting to login.");
           // Redirect to login or show a notification for re-authentication
         } else {
-          console.error("Error fetching patient details:", error);
+          console.error("Error fetching PIDs:", error);
         }
-        setPatientDetails(null); 
-      } finally {
-        setIsLoading(false);
       }
-    }
-  };
-  fetchPatientDetails();
-}, [selectedPid]);
+    };
+    fetchPID();
+  }, []);
 
-useEffect(() => {
+  useEffect(() => {
+    const fetchPatientDetails = async () => {
+      if (selectedPid) {
+        try {
+          setIsLoading(true);
+          const token = getAuthToken();
+          if (token) {
+            const response = await axios.get(
+              `http://localhost:8080/api/patients/${selectedPid.p_id}`,
+              {
+                headers: { Authorization: `Bearer ${token}` },
+              }
+            );
+            console.log("Patient Details API Response:", response.data);
+            setPatientDetails(response.data);
+          } else {
+            console.error(
+              "Unable to fetch patient details due to missing token."
+            );
+          }
+        } catch (error) {
+          if (error.response && error.response.status === 401) {
+            console.error("Unauthorized access - redirecting to login.");
+            // Redirect to login or show a notification for re-authentication
+          } else {
+            console.error("Error fetching patient details:", error);
+          }
+          setPatientDetails(null);
+        } finally {
+          setIsLoading(false);
+        }
+      }
+    };
+    fetchPatientDetails();
+  }, [selectedPid]);
+
+  useEffect(() => {
     console.log("Auth Token:", localStorage.getItem("authToken"));
     console.log("Role:", localStorage.getItem("role"));
     console.log("User ID:", localStorage.getItem("user_id"));
-}, []);
-
+  }, []);
 
   // Start recording audio
   const startRecording = async () => {
@@ -132,7 +139,7 @@ useEffect(() => {
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
-      mediaRecorder.stream.getTracks().forEach((track) => track.stop()); 
+      mediaRecorder.stream.getTracks().forEach((track) => track.stop());
       setIsRecording(false);
       setIsPaused(false);
     }
@@ -143,31 +150,39 @@ useEffect(() => {
     try {
       // Convert Blob to ArrayBuffer and then decode audio data
       const arrayBuffer = await blob.arrayBuffer();
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const audioContext = new (window.AudioContext ||
+        window.webkitAudioContext)();
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-  
+
       // Ensure we handle cases with multiple channels if needed
-      const channelData = audioBuffer.numberOfChannels > 1 
-        ? Array.from({ length: audioBuffer.numberOfChannels }, (_, i) => audioBuffer.getChannelData(i))
-        : [audioBuffer.getChannelData(0)]; // Default to mono channel
-  
+      const channelData =
+        audioBuffer.numberOfChannels > 1
+          ? Array.from({ length: audioBuffer.numberOfChannels }, (_, i) =>
+              audioBuffer.getChannelData(i)
+            )
+          : [audioBuffer.getChannelData(0)]; // Default to mono channel
+
       // Encode to WAV format
       const wavBuffer = await WavEncoder.encode({
         sampleRate: audioBuffer.sampleRate,
         channelData: channelData,
       });
-  
+
       const wavBlob = new Blob([wavBuffer], { type: "audio/wav" });
-  
+
       // Prepare FormData
       const formData = new FormData();
       formData.append("audio_data", wavBlob, "audio.wav");
-  
+
       // Send POST request to the server
-      const response = await axios.post("http://localhost:5000/convert", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-  
+      const response = await axios.post(
+        "http://localhost:5000/convert",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
       // Handle response
       if (response.data && response.data.text) {
         setRecordedText(response.data.text);
@@ -211,7 +226,10 @@ useEffect(() => {
 
   return (
     <div className="inline w-full gap-4 mt-7 md:flex">
-      <Card title="Patient Details" className="w-full mt-6 md:w-1/2 md:mt-0 ">
+      <Card
+        title="Patient Details"
+        className="w-full mt-6 ml-1 md:w-2/5 md:mt-0 "
+      >
         <div className="card inline justify-content-center ">
           <Dropdown
             value={selectedPid}
@@ -220,70 +238,93 @@ useEffect(() => {
             optionLabel="p_id"
             placeholder="Select a PID"
             filter
-            className="w-full p-2 md:w-10rem bg-white border-2 border-blue-500 rounded-lg shadow-md hover:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="input-class-drop"
+            panelClassName="custom-dropdown-panel"
           />
-          <Card className="mt-4 flex items-center justify-center border-black bg-white">
+
+          <Card className="mt-4 h-52 flex  items-center justify-center shadow-lg border-black bg-white">
             {isLoading ? (
               <p>Loading patient details...</p>
             ) : patientDetails ? (
               <div>
-                <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Name: <span className="font-normal text-gray-800">{patientDetails.name}</span>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Name:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.name}
+                  </span>
                 </p>
-                <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Phone Number: <span className="font-normal text-gray-800">{patientDetails.phone}</span>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Phone number:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.name}
+                  </span>
                 </p>
-                <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Email: <span className="font-normal text-gray-800">{patientDetails.email}</span>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Email:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.name}
+                  </span>
                 </p>
-                <p className="text-lg font-semibold text-blue-700 mb-2">
-                  Status: <span className="font-normal text-gray-800">{patientDetails.status}</span>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Existing Allergies:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.phone}
+                  </span>
+                </p>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Current Problem:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.email}
+                  </span>
                 </p>
               </div>
             ) : (
-              <img src={Nodata} alt="No Data" className="w-20 h-24 mx-auto" />
+              <img src={Nodata} alt="No Data" className="w-36 h-36 mx-auto" />
             )}
           </Card>
         </div>
 
-        <div className="flex gap-2 mt-3">
+        <div className="flex gap-1 mt-6">
           <Button
             onClick={startRecording}
-            icon={<MicIcon />}
+            icon={<MicIcon sx={{ width: 20, height: 20 }} />}
             label="Start"
-            className="bg-green-600 text-white p-2 ml-4"
+            className="bg-green-600 text-white text-sm p-2 w-24"
             disabled={isRecording || isPaused}
           />
           <Button
             onClick={pauseRecording}
-            icon={<PauseIcon />}
+            icon={<PauseIcon sx={{ width: 20, height: 20 }} />}
             label="Pause"
-            className="bg-yellow-600 text-white p-2"
+            className="bg-yellow-800 text-white p-2 text-sm w-24"
             disabled={!isRecording || isPaused}
           />
           <Button
             onClick={resumeRecording}
-            icon={<PlayArrowIcon />}
+            icon={<PlayArrowIcon sx={{ width: 20, height: 20 }} />}
             label="Resume"
-            className="bg-blue-600 text-white p-2"
+            className="bg-blue-600 text-white text-sm p-2 w-28"
             disabled={!isRecording || !isPaused}
           />
           <Button
             onClick={stopRecording}
-            icon={<MicOffIcon />}
+            icon={<MicOffIcon sx={{ width: 20, height: 20 }} />}
             label="Stop"
-            className="bg-red-600 text-white p-2"
+            className="bg-red-600 text-white text-sm p-2 w-20"
             disabled={!isRecording}
           />
         </div>
       </Card>
 
-<Card className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4  bg-white" title="Converted Text">
+      <Card
+  className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4 ml-5 bg-white"
+  title="Converted Text"
+>
   <InputTextarea
     disabled
     rows={5}
     value={recordedText}
-    className="w-full h-60"
+    className="w-full h-60 border-2 border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
     placeholder="Converted text will appear here..."
   />
   <Button
