@@ -320,6 +320,7 @@ export default function PatientCard() {
   className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4 ml-5 bg-white"
   title="Converted Text"
 >
+  
   <InputTextarea
     disabled
     rows={5}
