@@ -228,7 +228,7 @@ export default function PatientCard() {
     <div className="inline w-full gap-5 mt-5 md:flex">
       <Card
         title="PATIENT DETAILS"
-        className="w-full mt-6 ml-1 md:w-2/5 md:mt-0 "
+        className="w-full mt-6 ml-1 md:w-2/5 md:mt-0"
       >
         <div className="card inline justify-content-center ">
           <Dropdown
