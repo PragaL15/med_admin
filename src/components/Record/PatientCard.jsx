@@ -225,9 +225,9 @@ export default function PatientCard() {
   };
 
   return (
-    <div className="inline w-full gap-4 mt-7 md:flex">
+    <div className="inline w-full gap-5 mt-5 md:flex">
       <Card
-        title="Patient Details"
+        title="PATIENT DETAILS"
         className="w-full mt-6 ml-1 md:w-2/5 md:mt-0 "
       >
         <div className="card inline justify-content-center ">
@@ -284,7 +284,7 @@ export default function PatientCard() {
           </Card>
         </div>
 
-        <div className="flex gap-1 mt-6">
+        <div className="flex gap-1 mt-5">
           <Button
             onClick={startRecording}
             icon={<MicIcon sx={{ width: 20, height: 20 }} />}
@@ -317,20 +317,20 @@ export default function PatientCard() {
       </Card>
 
       <Card
-  className="w-full mt-4 md:w-1/2 lg:w-3/5 md:mt-0 p-4 ml-5 bg-white"
-  title="Converted Text"
+  className="w-full md:w-1/2 lg:w-3/5 md:mt-0  ml-5 bg-white"
+  title="CONVERTED TEXT"
 >
   <InputTextarea
     disabled
     rows={5}
     value={recordedText}
-    className="w-full h-60 border-2 border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    className="w-full h-64 border text-sm shadow-lg border-gray-300 rounded-md p-4 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
     placeholder="Converted text will appear here..."
   />
   <Button
     onClick={handleSubmit}
     label="Submit"
-    className="bg-blue-600 text-white p-2 mt-3"
+    className="bg-blue-600  text-white text-sm p-2 w-20 mt-4"
   />
 </Card>
     </div>

@@ -10,7 +10,7 @@
     @apply w-full h-9 mt-1 border-2 rounded p-3 text-sm focus:outline-none focus:ring-0 focus:border-gray-400;
 }
 .input-class-drop {
-    @apply w-full h-9 mt-1 border rounded p-1 text-sm focus:outline-none focus:ring-0 focus:border-gray-300 z-auto;
+    @apply w-full h-9 mt-1 border rounded p-1 text-sm focus:outline-none focus:ring-0 focus:border-gray-400 z-auto;
 }
 
 
@@ -32,17 +32,15 @@
      @apply bg-white border border-gray-300 rounded-md shadow-lg ;
 }
 
-/* Style individual items in the dropdown */
 .p-dropdown-item {
-    @apply text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-700 px-3 py-2;
+    @apply text-sm text-gray-700 hover:bg-red-50 hover:text-red-700 px-3 py-2;
 }
 
-/* Style selected or active item */
 .p-dropdown-item.p-highlight {
-    @apply bg-blue-500 text-white;
+    @apply bg-red-50 text-red-700;
 }
 .custom-dropdown-panel {
-    position: absolute; /* Position the dropdown absolutely */
-    z-index: 10; /* Set the z-index lower than the navbar */
-    top: 100%; /* Ensure it is positioned below the input field */
+    position: absolute; 
+    z-index: 10; 
+    top: 100%; 
 }

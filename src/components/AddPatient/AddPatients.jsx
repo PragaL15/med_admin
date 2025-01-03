@@ -110,7 +110,6 @@ export default function PatientForm({
   return (
       <div className="w-full p-6 bg-rec_bac ">
       <h1 className="text-2xl font-bold mb-6 ">Add Patient Details</h1>
-  {/* which div I need to wrap and have a max height */}
   <div className="w-full max-h-96 p-6 border rounded-lg shadow-lg space-y-6 bg-Add_details_bac overflow-y-auto">
         <div className="flex">
           <div className="ml-4 w-1/2">
@@ -166,8 +165,6 @@ export default function PatientForm({
             )}
           </div>
         </div>
-
-        {/* Address */}
         <div className="flex">
           <div className="ml-4 w-1/3">
             <label className="label-class">Street:</label>
