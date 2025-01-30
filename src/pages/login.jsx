@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginImage from "../../public/login1.png"; // Correct image import
+import LoginImage from "../../public/login1.png"; 
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // To manage loading state
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
-  // Clear localStorage when the component mounts
   useEffect(() => {
     localStorage.clear();
   }, []);
@@ -30,8 +29,8 @@ const LoginPage = () => {
       return;
     }
 
-    setError(""); // Clear any previous errors
-    setLoading(true); // Start loading
+    setError(""); 
+    setLoading(true); 
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -51,7 +50,6 @@ const LoginPage = () => {
 
         console.log("Login successful:", data);
 
-        // Redirect based on user_id
         if (data.user_id === 1) {
           navigate("/record");
         } else if (data.user_id === 2) {

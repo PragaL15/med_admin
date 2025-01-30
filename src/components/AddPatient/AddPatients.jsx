@@ -108,7 +108,7 @@ export default function PatientForm({
   };
 
   return (
-      <div className="w-full p-6 bg-rec_bac ">
+      <div className="w-full p-6 ">
       <h1 className="text-2xl font-bold mb-6 ">Add Patient Details</h1>
   <div className="w-full max-h-96 p-6 border rounded-lg shadow-lg space-y-6 bg-Add_details_bac overflow-y-auto">
         <div className="flex">

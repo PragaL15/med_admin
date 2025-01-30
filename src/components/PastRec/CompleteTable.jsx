@@ -116,17 +116,8 @@ export default function DataRecord() {
               placeholder="Search by Name"
               className="input-class-inp ml-16 mt-3"
             />
-            
           </IconField>
         </div>
-        <Button
-          type="button"
-          icon="pi pi-filter"
-          label="Filter"
-          outlined
-          onClick={applyFilter}
-          className="bg-blue-500 p-3 text-white"
-        />
       </div>
     );
   };
@@ -143,7 +134,7 @@ export default function DataRecord() {
 
   return (
     <div >
-      <h1 className="text-2xl max-h-full font-bold mb-6 mt-4 ">Patient Past Records</h1>
+      <h1 className="text-xl max-h-full font-bold mb-9 ml-2 mt-8 ">Patient Past Records</h1>
       <div className="bg-bg-Add_details_bac">
       <DataTable
   value={records}
