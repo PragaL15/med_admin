@@ -8,9 +8,9 @@ const PastRecord = () => {
   return (
     <div className="h-screen">
       <Sidebar />
-      <TopBar/>
+      <TopBar />
       <div className="w-full md:pl-60 md:pt-20 md:pr-8 p-3 h-full">
-      <DataRecord token={token} />
+        <DataRecord token={token} />
       </div>
     </div>
   );

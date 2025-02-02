@@ -5,11 +5,11 @@ const LogoutPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.clear();  
-    navigate("/login");    
+    localStorage.clear();
+    navigate("/login");
   }, [navigate]);
 
-  return null; 
+  return null;
 };
 
 export default LogoutPage;

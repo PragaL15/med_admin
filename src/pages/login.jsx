@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginImage from "../../public/login1.png"; 
+import LoginImage from "../../public/login1.png";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,8 +29,8 @@ const LoginPage = () => {
       return;
     }
 
-    setError(""); 
-    setLoading(true); 
+    setError("");
+    setLoading(true);
 
     try {
       const response = await fetch("http://localhost:8080/login", {
@@ -41,7 +41,7 @@ const LoginPage = () => {
 
       const data = await response.json();
 
-      setLoading(false); 
+      setLoading(false);
 
       if (response.ok && data.status) {
         localStorage.setItem("authToken", data.token);
@@ -71,7 +71,11 @@ const LoginPage = () => {
     <div className="flex h-screen justify-center items-center bg-custom-blue">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="flex justify-center mb-6">
-          <img src={LoginImage} alt="Login" className="w-32 h-32 object-cover" />
+          <img
+            src={LoginImage}
+            alt="Login"
+            className="w-32 h-32 object-cover"
+          />
         </div>
 
         <h2 className="text-2xl font-bold text-center">Login</h2>
