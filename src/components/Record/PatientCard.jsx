@@ -24,11 +24,10 @@ export default function PatientCard() {
   const getAuthToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      console.error("No auth token found in localStorage"); // Log if the token is missing
+      console.error("No auth token found in localStorage");
     }
     return token;
   };
-  // Fetch patient IDs with Authorization header
   useEffect(() => {
     const fetchPID = async () => {
       try {
@@ -48,7 +47,6 @@ export default function PatientCard() {
       } catch (error) {
         if (error.response && error.response.status === 401) {
           console.error("Unauthorized access - redirecting to login.");
-          // Redirect to login or show a notification for re-authentication
         } else {
           console.error("Error fetching PIDs:", error);
         }
@@ -80,7 +78,6 @@ export default function PatientCard() {
         } catch (error) {
           if (error.response && error.response.status === 401) {
             console.error("Unauthorized access - redirecting to login.");
-            // Redirect to login or show a notification for re-authentication
           } else {
             console.error("Error fetching patient details:", error);
           }
@@ -99,7 +96,6 @@ export default function PatientCard() {
     console.log("User ID:", localStorage.getItem("user_id"));
   }, []);
 
-  // Start recording audio
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -119,7 +115,6 @@ export default function PatientCard() {
     }
   };
 
-  // Pause recording audio
   const pauseRecording = () => {
     if (mediaRecorder && mediaRecorder.state === "recording") {
       mediaRecorder.pause();
@@ -127,7 +122,6 @@ export default function PatientCard() {
     }
   };
 
-  // Resume recording audio
   const resumeRecording = () => {
     if (mediaRecorder && mediaRecorder.state === "paused") {
       mediaRecorder.resume();
@@ -135,7 +129,6 @@ export default function PatientCard() {
     }
   };
 
-  // Stop recording audio
   const stopRecording = () => {
     if (mediaRecorder) {
       mediaRecorder.stop();
@@ -145,24 +138,19 @@ export default function PatientCard() {
     }
   };
 
-  // Send audio to backend with WAV conversion and save the converted text
   const sendAudio = async (blob) => {
     try {
-      // Convert Blob to ArrayBuffer and then decode audio data
       const arrayBuffer = await blob.arrayBuffer();
       const audioContext = new (window.AudioContext ||
         window.webkitAudioContext)();
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
-      // Ensure we handle cases with multiple channels if needed
       const channelData =
         audioBuffer.numberOfChannels > 1
           ? Array.from({ length: audioBuffer.numberOfChannels }, (_, i) =>
               audioBuffer.getChannelData(i)
             )
-          : [audioBuffer.getChannelData(0)]; // Default to mono channel
-
-      // Encode to WAV format
+          : [audioBuffer.getChannelData(0)];
       const wavBuffer = await WavEncoder.encode({
         sampleRate: audioBuffer.sampleRate,
         channelData: channelData,
@@ -170,11 +158,9 @@ export default function PatientCard() {
 
       const wavBlob = new Blob([wavBuffer], { type: "audio/wav" });
 
-      // Prepare FormData
       const formData = new FormData();
       formData.append("audio_data", wavBlob, "audio.wav");
 
-      // Send POST request to the server
       const response = await axios.post(
         "http://localhost:5000/convert",
         formData,
@@ -183,7 +169,6 @@ export default function PatientCard() {
         }
       );
 
-      // Handle response
       if (response.data && response.data.text) {
         setRecordedText(response.data.text);
       } else if (response.data && response.data.error) {
@@ -317,22 +302,22 @@ export default function PatientCard() {
       </Card>
 
       <Card
-  className="w-full md:w-1/2 lg:w-3/5 md:mt-0  ml-5 bg-white"
-  title="CONVERTED TEXT"
->
-  <InputTextarea
-    disabled
-    rows={5}
-    value={recordedText}
-    className="w-full h-64 border text-sm shadow-lg border-gray-300 rounded-md p-4 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-    placeholder="Converted text will appear here..."
-  />
-  <Button
-    onClick={handleSubmit}
-    label="Submit"
-    className="bg-blue-600  text-white text-sm p-2 w-20 mt-4"
-  />
-</Card>
+        className="w-full md:w-1/2 lg:w-3/5 md:mt-0  ml-5 bg-white"
+        title="CONVERTED TEXT"
+      >
+        <InputTextarea
+          disabled
+          rows={5}
+          value={recordedText}
+          className="w-full h-64 border text-sm shadow-lg border-gray-300 rounded-md p-4 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Converted text will appear here..."
+        />
+        <Button
+          onClick={handleSubmit}
+          label="Submit"
+          className="bg-blue-600  text-white text-sm p-2 w-20 mt-4"
+        />
+      </Card>
     </div>
   );
 }
