@@ -7,9 +7,8 @@ export default function AppointmentsDemo() {
     const [appointments, setAppointments] = useState([]);
     const [admitted, setAdmitted] = useState([]);
 
-    // Helper function to format time from 24-hour to 12-hour format
     const formatTime = (time) => {
-        if (!time) return ""; // Return empty if time is undefined or null
+        if (!time) return ""; 
         const [hours, minutes] = time.split(":");
         const hour = parseInt(hours, 10);
         const formattedHour = hour % 12 || 12;
@@ -42,7 +41,6 @@ export default function AppointmentsDemo() {
             return;
         }
 
-        // Fetching appointments data
         fetch("http://localhost:8080/api/dashboard/AppointmentTable", {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -76,7 +74,6 @@ export default function AppointmentsDemo() {
 
     return (
         <div className="inline mt-12 gap-0 text-xxs" style={{ width: "100%" }}>
-            {/* Appointments Table */}
             <div className="w-full overflow-hidden mb-10 ml-10 mt-12 text-xxs font-sans" style={{ height: "13rem", borderRight: "1px solid #ccc" }}>
                 <h1 className="text-black ml-32 font-sans text-2xl mb-3 font-bold">Appointments</h1>
                 <DataTable
