@@ -1,4 +1,4 @@
-// RoutesComponent.js
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
@@ -8,7 +8,7 @@ import PastRecord from "./pages/PastRecord";
 import AddPatient from "./pages/PatientAdd";
 import Logout from "./pages/logout";
 import AppointMent from "./pages/AppointmentBooking";
-import ProtectedRoute from "./components/ProtectedRoutes"; // Import ProtectedRoute component
+import ProtectedRoute from "./components/ProtectedRoutes"; 
 
 const RoutesComponent = () => {
   return (
