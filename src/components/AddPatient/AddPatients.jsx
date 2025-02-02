@@ -18,7 +18,7 @@ export default function PatientForm({
   const [pincode, setPincode] = useState("");
   const [mode, setMode] = useState("");
   const [age, setAge] = useState("");
-  const [dob, setDob] = useState(""); // Date of Birth state
+  const [dob, setDob] = useState(""); 
   const [gender, setGender] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -30,7 +30,6 @@ export default function PatientForm({
   const handleSubmit = async () => {
     const newErrors = {};
 
-    // Validations
     if (!firstName) newErrors.firstName = "First name is required";
     if (!lastName) newErrors.lastName = "Last name is required";
     if (!phone) {
@@ -47,9 +46,7 @@ export default function PatientForm({
     } else if (isNaN(age) || age <= 0 || age > 120) {
       newErrors.age = "Age must be a valid number between 1 and 120";
     }
-    // if (!dob) {
-    //     newErrors.dob = "Date of Birth is required";
-    // }
+  
     if (!gender) newErrors.gender = "Gender is required";
 
     setErrors(newErrors);
@@ -59,15 +56,15 @@ export default function PatientForm({
       return;
     }
     const formattedDob = new Date(dob).toISOString().split("T")[0];
-    // Data object for submission
+  
     const patientData = {
-      p_name: `${firstName} ${lastName}`, // Combined first and last name
+      p_name: `${firstName} ${lastName}`, 
       p_number: phone,
       p_email: email,
-      p_address: `${street}, ${town}, ${pincode}`, // Combined address fields into one string
+      p_address: `${street}, ${town}, ${pincode}`,
       p_age: parseInt(age, 10),
       p_gender: gender,
-      date_of_birth: formattedDob, // Directly use the dob without formatting
+      date_of_birth: formattedDob, 
     };
 
     try {
@@ -138,7 +135,6 @@ export default function PatientForm({
           </div>
         </div>
 
-        {/* Phone and Email */}
         <div className="flex">
           <div className="ml-4 w-1/2">
             <label className="label-class">Phone Number:</label>
@@ -225,7 +221,7 @@ export default function PatientForm({
               onChange={(e) => setDob(e.target.value)}
               className="input-class-inp"
               placeholder="Enter DOB (YYYY-MM-DD)"
-              type="date" // Use the date input type for better date handling
+              type="date"
             />
             {errors.dob && (
               <span className="text-red-500 text-sm">{errors.dob}</span>
