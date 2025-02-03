@@ -102,7 +102,6 @@ export default function DataRecord() {
       global: { ...prevFilters.global, value: globalFilterValue },
     }));
   };
-
   const renderHeader = () => {
     return (
       <div className="flex justify-between items-center ">
@@ -120,7 +119,6 @@ export default function DataRecord() {
       </div>
     );
   };
-
   const dateBodyTemplate = (rowData) => {
     return new Date(rowData.date).toLocaleDateString("en-US", {
       day: "2-digit",
@@ -128,9 +126,7 @@ export default function DataRecord() {
       year: "numeric",
     });
   };
-
   const header = renderHeader();
-
   return (
     <div>
       <h1 className="text-xl max-h-full font-bold mb-9 ml-2 mt-8 ">
