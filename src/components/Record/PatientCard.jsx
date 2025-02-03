@@ -241,27 +241,22 @@ export default function PatientCard() {
                 <p className=" font-semibold text-blue-700 mb-2">
                   Phone number:{" "}
                   <span className="font-normal text-sm text-gray-800">
-                    {patientDetails.name}
+                    {patientDetails.number}
                   </span>
                 </p>
                 <p className=" font-semibold text-blue-700 mb-2">
                   Email:{" "}
                   <span className="font-normal text-sm text-gray-800">
-                    {patientDetails.name}
-                  </span>
-                </p>
-                <p className=" font-semibold text-blue-700 mb-2">
-                  Existing Allergies:{" "}
-                  <span className="font-normal text-sm text-gray-800">
-                    {patientDetails.phone}
-                  </span>
-                </p>
-                <p className=" font-semibold text-blue-700 mb-2">
-                  Current Problem:{" "}
-                  <span className="font-normal text-sm text-gray-800">
                     {patientDetails.email}
                   </span>
                 </p>
+                <p className=" font-semibold text-blue-700 mb-2">
+                  Age:{" "}
+                  <span className="font-normal text-sm text-gray-800">
+                    {patientDetails.age}
+                  </span>
+                </p>
+              
               </div>
             ) : (
               <img src={Nodata} alt="No Data" className="w-36 h-36 mx-auto" />
@@ -302,7 +297,7 @@ export default function PatientCard() {
       </Card>
 
       <Card
-        className="w-full md:w-1/2 lg:w-3/5 md:mt-0  ml-5 bg-white"
+        className="w-full md:w-1/2 lg:w-3/5 md:mt-0 mt-6 ml-1 md:ml-5 bg-white"
         title="CONVERTED TEXT"
       >
         <InputTextarea

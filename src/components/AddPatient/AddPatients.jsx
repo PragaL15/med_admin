@@ -16,7 +16,8 @@ export default function PatientForm({
   const [street, setStreet] = useState("");
   const [town, setTown] = useState("");
   const [pincode, setPincode] = useState("");
-  const [mode, setMode] = useState("");
+  const [occupation, setOccupation] = useState("");
+  const [langSpoken, setLangSpoken] = useState("");
   const [age, setAge] = useState("");
   const [dob, setDob] = useState(""); 
   const [gender, setGender] = useState("");
@@ -58,13 +59,15 @@ export default function PatientForm({
     const formattedDob = new Date(dob).toISOString().split("T")[0];
   
     const patientData = {
-      p_name: `${firstName} ${lastName}`, 
-      p_number: phone,
-      p_email: email,
-      p_address: `${street}, ${town}, ${pincode}`,
-      p_age: parseInt(age, 10),
-      p_gender: gender,
-      date_of_birth: formattedDob, 
+      name: `${firstName} ${lastName}`, 
+      number: phone,
+      email: email,
+      address: `${street}, ${town}, ${pincode}`,
+      age: parseInt(age, 10),
+      gender: gender,
+      dob: formattedDob, 
+      occupation,
+      lang_spoken:langSpoken
     };
 
     try {
@@ -73,6 +76,7 @@ export default function PatientForm({
         alert("Authorization token is missing. Please log in again.");
         return;
       }
+      console.log("Patient Data Sent:", patientData);
 
       const response = await axios.post(
         "http://localhost:8080/api/details/patientDetails",
@@ -107,9 +111,9 @@ export default function PatientForm({
   return (
       <div className="w-full p-6 ">
       <h1 className="text-2xl font-bold mb-6 ">Add Patient Details</h1>
-  <div className="w-full max-h-96 p-6 border rounded-lg shadow-lg space-y-6 bg-Add_details_bac overflow-y-auto">
-        <div className="flex">
-          <div className="ml-4 w-1/2">
+  <div className="w-full md:max-h-96 p-6 border rounded-lg shadow-lg space-y-6 bg-Add_details_bac md:overflow-y-auto">
+        <div className="md:flex inline">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">First Name:</label>
             <InputText
               value={firstName}
@@ -121,7 +125,7 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.firstName}</span>
             )}
           </div>
-          <div className="ml-4 w-1/2">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">Last Name:</label>
             <InputText
               value={lastName}
@@ -135,8 +139,8 @@ export default function PatientForm({
           </div>
         </div>
 
-        <div className="flex">
-          <div className="ml-4 w-1/2">
+        <div className="md:flex inline">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">Phone Number:</label>
             <InputText
               value={phone}
@@ -148,7 +152,7 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.phone}</span>
             )}
           </div>
-          <div className="ml-4 w-1/2">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">Email:</label>
             <InputText
               value={email}
@@ -161,8 +165,8 @@ export default function PatientForm({
             )}
           </div>
         </div>
-        <div className="flex">
-          <div className="ml-4 w-1/3">
+        <div className="md:flex inline">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Street:</label>
             <InputText
               value={street}
@@ -174,7 +178,7 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.street}</span>
             )}
           </div>
-          <div className="ml-4 w-1/3">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Town:</label>
             <InputText
               value={town}
@@ -186,7 +190,7 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.town}</span>
             )}
           </div>
-          <div className="ml-4 w-1/3">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Pincode:</label>
             <InputText
               value={pincode}
@@ -201,8 +205,8 @@ export default function PatientForm({
         </div>
 
         {/* Age and DOB */}
-        <div className="flex">
-          <div className="ml-4 w-1/2">
+        <div className="md:flex inline">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">Age:</label>
             <InputText
               value={age}
@@ -214,7 +218,7 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.age}</span>
             )}
           </div>
-          <div className="ml-4 w-1/2">
+          <div className="ml-4 md:w-1/2">
             <label className="label-class">Date of Birth:</label>
             <InputText
               value={dob}
@@ -228,8 +232,8 @@ export default function PatientForm({
             )}
           </div>
         </div>
-        <div className="flex">
-          <div className="ml-4 w-1/3">
+        <div className="md:flex inline">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Gender:</label>
             <Dropdown
               value={gender}
@@ -242,28 +246,28 @@ export default function PatientForm({
               <span className="text-red-500 text-sm">{errors.gender}</span>
             )}
           </div>
-          <div className="ml-4 w-1/3">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Occupation:</label>
             <InputText
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              value={occupation}
+              onChange={(e) => setOccupation(e.target.value)}
               className="input-class-inp"
               placeholder="Enter age"
             />
-            {errors.age && (
-              <span className="text-red-500 text-sm">{errors.age}</span>
+            {errors.occupation && (
+              <span className="text-red-500 text-sm">{errors.occupation}</span>
             )}
           </div>
-          <div className="ml-4 w-1/3">
+          <div className="ml-4 md:w-1/3">
             <label className="label-class">Languages Spoken:</label>
             <InputText
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
+              value={langSpoken}
+              onChange={(e) => setLangSpoken(e.target.value)}
               className="input-class-inp"
               placeholder="Enter age"
             />
-            {errors.age && (
-              <span className="text-red-500 text-sm">{errors.age}</span>
+            {errors.langSpoken && (
+              <span className="text-red-500 text-sm">{errors.langSpoken}</span>
             )}
           </div>
         </div>

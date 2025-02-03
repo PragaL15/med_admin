@@ -63,14 +63,14 @@ const Sidebar = ({ children }) => {
                     isMenuVisible ? 'translate-x-0' : '-translate-x-full'
                 } md:translate-x-0`}
             >
-                <h2 className="text-black text-2xl font-medium text-center pb-4">Med Records</h2>
+                <h2 className="text-white text-2xl font-medium text-center pb-4">Med Records</h2>
                 {items.map((item) => (
                     <div
                         key={item.label}
-                        className={`flex items-center gap-4 p-3 text-black text-lg rounded-lg cursor-pointer transition-colors focus:outline-none focus:bg-gray-200 ${
-                            activeItem === item
-                                ? 'bg-white text-side-blue border border-gray-200'
-                                : 'hover:bg-gray-50 active:bg-gray-50 hover:text-side-blue mt-2 mb-2'
+                        className={`flex items-center gap-3 p-3 text-lg rounded-lg cursor-pointer transition-colors focus:outline-none ${
+                            activeItem === item.label
+                                ? 'bg-white text-black border'
+                                : 'hover:bg-transparent hover:text-side-blue mt-2 mb-2 text-white'
                         }`}
                         
                         onClick={() => {

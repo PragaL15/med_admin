@@ -11,12 +11,10 @@ export default function DataRecord() {
   const [filters, setFilters] = useState(null);
   const [loading, setLoading] = useState(true);
   const [globalFilterValue, setGlobalFilterValue] = useState("");
-
   useEffect(() => {
     fetchCombinedRecords();
     initFilters();
   }, []);
-
   const getAuthToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -24,14 +22,12 @@ export default function DataRecord() {
     }
     return token;
   };
-
   const fetchCombinedRecords = async () => {
     const token = getAuthToken();
     if (!token) {
       setLoading(false);
       return;
     }
-
     try {
       const [recordsResponse, patientsResponse, doctorsResponse] =
         await Promise.all([
@@ -51,7 +47,6 @@ export default function DataRecord() {
           "Failed to fetch data. Please check your credentials or try again later."
         );
       }
-
       const recordsData = await recordsResponse.json();
       const patientsData = await patientsResponse.json();
       const doctorsData = await doctorsResponse.json();
@@ -104,10 +99,10 @@ export default function DataRecord() {
   };
   const renderHeader = () => {
     return (
-      <div className="flex justify-between items-center ">
-        <div className="flex items-center space-x-2">
+      <div className="flex  ">
+        <div className="flex space-x-2">
           <IconField iconPosition="left">
-            <InputIcon className="pi pi-search w-8 h-8 border border-gray-300 rounded-md p-2 mr-10" />
+            <InputIcon className="pi pi-search w-8 h-8 mb-20 border border-gray-300 rounded-md p-2 mr-10" />
             <InputText
               value={globalFilterValue}
               onChange={onGlobalFilterChange}
@@ -129,7 +124,7 @@ export default function DataRecord() {
   const header = renderHeader();
   return (
     <div>
-      <h1 className="text-xl max-h-full font-bold mb-9 ml-2 mt-8 ">
+      <h1 className="text-xl max-h-full font-bold mb-5  ml-2 mt-10 ">
         Patient Past Records
       </h1>
       <div className="bg-bg-Add_details_bac">
