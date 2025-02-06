@@ -102,7 +102,6 @@ export default function DataRecord() {
       <div className="flex  ">
         <div className="flex space-x-2">
           <IconField iconPosition="left">
-            <InputIcon className="pi pi-search w-8 h-8 mb-20 border border-gray-300 rounded-md p-2 mr-10" />
             <InputText
               value={globalFilterValue}
               onChange={onGlobalFilterChange}
