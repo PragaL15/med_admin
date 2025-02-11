@@ -17,5 +17,4 @@ axiosInstance.interceptors.request.use(
     },
     (error) => Promise.reject(error)
 );
-
 export default axiosInstance;
