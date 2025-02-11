@@ -54,41 +54,50 @@ export default function PatientCard() {
     };
     fetchPID();
   }, []);
-
   useEffect(() => {
     const fetchPatientDetails = async () => {
-      if (selectedPid) {
-        try {
-          setIsLoading(true);
-          const token = getAuthToken();
-          if (token) {
-            const response = await axios.get(
-              `http://localhost:8080/api/patients/${selectedPid.p_id}`,
-              {
-                headers: { Authorization: `Bearer ${token}` },
-              }
-            );
-            console.log("Patient Details API Response:", response.data);
-            setPatientDetails(response.data);
-          } else {
-            console.error(
-              "Unable to fetch patient details due to missing token."
-            );
-          }
-        } catch (error) {
-          if (error.response && error.response.status === 401) {
-            console.error("Unauthorized access - redirecting to login.");
-          } else {
-            console.error("Error fetching patient details:", error);
-          }
-          setPatientDetails(null);
-        } finally {
-          setIsLoading(false);
+      if (!selectedPid || !selectedPid.p_id) {
+        console.warn("No valid patient ID selected.");
+        setPatientDetails(null);
+        return;
+      }
+  
+      try {
+        setIsLoading(true);
+        const token = getAuthToken();
+        if (!token) {
+          console.error("Missing authentication token. Cannot fetch patient details.");
+          return;
         }
+  
+        const response = await axios.get(
+          `http://localhost:8080/api/patients/${selectedPid.p_id}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+  
+        console.log("✅ Patient Details API Response:", response.data);
+        setPatientDetails(response.data);
+      } catch (error) {
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.error("🚨 Unauthorized access - Redirecting to login.");
+          } else {
+            console.error(`❌ API Error (${error.response.status}):`, error.response.data);
+          }
+        } else {
+          console.error("⚠️ Network or unexpected error:", error.message);
+        }
+        setPatientDetails(null);
+      } finally {
+        setIsLoading(false);
       }
     };
+  
     fetchPatientDetails();
   }, [selectedPid]);
+  
 
   useEffect(() => {
     console.log("Auth Token:", localStorage.getItem("authToken"));
@@ -183,31 +192,35 @@ export default function PatientCard() {
   };
 
   const handleSubmit = async () => {
-    if (!selectedPid || !recordedText) {
-      alert("Please select a patient and ensure there is converted text.");
+    if (!selectedPid || !selectedPid.p_id) {
+      alert("Error: Please select a patient before submitting.");
+      console.error("Error: selectedPid is missing or invalid", selectedPid);
       return;
     }
-
-    const token = getAuthToken();
+  
     try {
-      if (token) {
-        await axios.put(
-          `http://localhost:8080/api/records/${selectedPid.p_id}/description`,
-          { description: recordedText },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
-        alert("Converted text saved successfully.");
-        window.location.reload();
-      } else {
-        alert("Authorization token is missing. Please log in again.");
-      }
+      const token = getAuthToken();
+      if (!token) throw new Error("Authorization token missing.");
+  
+      console.log("Submitting to backend with p_id:", selectedPid.p_id);
+  
+      const response = await axios.put(
+        `http://localhost:8080/api/records/${selectedPid.p_id}/description`, 
+        { 
+          p_id: selectedPid.p_id, 
+          description: recordedText 
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      alert("Converted text saved successfully.");
+      window.location.reload();
     } catch (error) {
-      console.error("Error saving converted text:", error);
+      console.error("Error saving converted text:", error.response?.data || error.message);
       alert("Failed to save the converted text.");
     }
   };
+  
 
   return (
     <div className="inline w-full gap-5 mt-5 md:flex">
@@ -216,16 +229,19 @@ export default function PatientCard() {
         className="w-full mt-6 ml-1 md:w-2/5 md:mt-0"
       >
         <div className="card inline justify-content-center ">
-          <Dropdown
-            value={selectedPid}
-            onChange={(e) => setSelectedPid(e.value)}
-            options={p_id}
-            optionLabel="p_id"
-            placeholder="Select a PID"
-            filter
-            className="input-class-drop"
-            panelClassName="custom-dropdown-panel"
-          />
+        <Dropdown
+  value={selectedPid}
+  onChange={(e) => {
+    console.log("Selected patient:", e.value);
+    setSelectedPid(e.value);
+  }}
+  options={p_id}
+  optionLabel="p_id"
+  placeholder="Select a PID"
+  filter
+  className="input-class-drop"
+/>
+
 
           <Card className="mt-4 h-52 flex  items-center justify-center shadow-lg border-black bg-white">
             {isLoading ? (
