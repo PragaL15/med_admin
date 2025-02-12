@@ -57,9 +57,9 @@ Now, the application should be running at **`http://localhost:5173/`** 🚀
 ## 📌 **Folder Structure**
 ```sh
 med_admin/
-│── public/        # Static assets (images, icons)
-│── src/           # Source code (components, hooks, pages)
-│── package.json   # Dependencies and scripts
+│── public/        
+│── src/          
+│── package.json  
 │── tailwind.config.js # Tailwind CSS configuration
 │── vite.config.js  # Vite project configuration
 ```
