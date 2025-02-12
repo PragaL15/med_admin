@@ -61,7 +61,7 @@ med_admin/
 │── src/          
 │── package.json  
 │── tailwind.config.js # Tailwind CSS 
-│── vite.config.js  # 
+│── vite.config.js  
 ```
 ---
 
