@@ -60,7 +60,7 @@ med_admin/
 │── public/        
 │── src/          
 │── package.json  
-│── tailwind.config.js # Tailwind CSS 
+│── tailwind.config.js 
 │── vite.config.js  
 ```
 ---
