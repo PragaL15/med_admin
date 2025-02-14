@@ -252,7 +252,7 @@ export default function PatientForm({
               value={occupation}
               onChange={(e) => setOccupation(e.target.value)}
               className="input-class-inp"
-              placeholder="Enter age"
+              placeholder="Enter occupation"
             />
             {errors.occupation && (
               <span className="text-red-500 text-sm">{errors.occupation}</span>
@@ -264,7 +264,7 @@ export default function PatientForm({
               value={langSpoken}
               onChange={(e) => setLangSpoken(e.target.value)}
               className="input-class-inp"
-              placeholder="Enter age"
+              placeholder="Enter Language"
             />
             {errors.langSpoken && (
               <span className="text-red-500 text-sm">{errors.langSpoken}</span>
